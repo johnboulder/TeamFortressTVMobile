@@ -1,0 +1,181 @@
+#article-wrapper {
+  clear: both;
+  padding: 0px 12px;
+  padding-bottom: 15px;
+  margin: 15px 0; }
+
+#article-title {
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: -.5px;
+  color: #444; }
+
+#article-pubinfo {
+  color: #888;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 16px;
+  position: relative;
+  z-index: 2;
+  margin-top: 15px;
+  margin-bottom: 15px; }
+
+#author-avatar {
+  float: left;
+  width: 32px;
+  height: 32px;
+  margin-right: 12px; }
+
+#author-avatar-mask {
+  width: 32px;
+  height: 32px;
+  box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.2) inset;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+#article-pubinfo a {
+  font-weight: bold;
+  color: #4b779b; }
+
+#article-body {
+  font-size: 35px;
+  line-height: 1.5;
+  font-family: Arial;
+  color: #333; }
+
+#article-body a {
+  color: #4b779b; }
+
+#article-body p {
+  margin: 15px 0; }
+
+#article-body ol {
+  list-style: decimal;
+  padding-left: 48px; }
+
+#article-body ol li p {
+  font-weight: normal; }
+
+#article-body blockquote {
+  margin: 10px 0;
+  margin-left: 40px;
+  padding-left: 15px;
+  font-size: 14px;
+  position: relative; }
+
+#article-body blockquote:before {
+  width: 5px;
+  height: 100%;
+  background: #6490b4;
+  content: '';
+  position: absolute;
+  left: -8px;
+  border-radius: 4px; }
+
+#article-body hr {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  border: 0;
+  padding: 0;
+  height: 1px; }
+
+#article-body em {
+  font-style: italic; }
+
+#article-body strong {
+  font-weight: bold; }
+
+#article-body .flag {
+  margin-left: 2px;
+  margin-right: 2px; }
+
+#article-body h1 {
+  font-weight: bold;
+  color: #4b779b;
+  color: #444;
+  font-size: 21px;
+  margin: 15px 0;
+  margin-top: 20px;
+  letter-spacing: -.5px; }
+
+#article-body h2 {
+  font-weight: bold; }
+
+#article-body h5 {
+  font-size: 16px;
+  font-style: italic;
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 24px; }
+
+#article-body ul {
+  margin: 10px 0;
+  list-style-type: disc;
+  margin-left: 45px; }
+
+#article-body li {
+  margin-top: 6px; }
+
+#article-body sup {
+  vertical-align: super;
+  font-size: 11px; }
+
+#article-body .yt-embed {
+  margin: 0 auto;
+  display: block;
+  width: 702px;
+  height: 395px;
+  padding: 15px 0; }
+
+#article-body img {
+  max-width: 100%; }
+
+.tf2-classes {
+  background: url(/img/misc/tf2_class_spr.png) no-repeat top left;
+  display: inline-block; }
+
+.sprite-demoman {
+  background-position: 0 0;
+  width: 16px;
+  height: 16px; }
+
+.sprite-engineer {
+  background-position: 0 -66px;
+  width: 16px;
+  height: 16px; }
+
+.sprite-heavy {
+  background-position: 0 -132px;
+  width: 16px;
+  height: 16px; }
+
+.sprite-medic {
+  background-position: 0 -198px;
+  width: 16px;
+  height: 16px; }
+
+.sprite-pyro {
+  background-position: 0 -264px;
+  width: 16px;
+  height: 16px; }
+
+.sprite-scout {
+  background-position: 0 -330px;
+  width: 16px;
+  height: 16px; }
+
+.sprite-sniper {
+  background-position: 0 -396px;
+  width: 16px;
+  height: 16px; }
+
+.sprite-soldier {
+  background-position: 0 -462px;
+  width: 16px;
+  height: 16px; }
+
+.sprite-spy {
+  background-position: 0 -528px;
+  width: 16px;
+  height: 16px; }
