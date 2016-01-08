@@ -2,11 +2,13 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.wherethismove.teamfortresstvmobile.ArticleWebViewFragment">
+             tools:context=".pages.articles.ArticleViewFragment">
 
-    <WebView
-        android:id="@+id/webViewFragment"
+    <ListView
+        android:id="@+id/list_view_article_body_and_comments"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent">
+
+    </ListView>
 
 </FrameLayout>

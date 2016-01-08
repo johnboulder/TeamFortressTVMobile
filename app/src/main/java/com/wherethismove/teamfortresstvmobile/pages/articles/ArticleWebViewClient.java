@@ -1,4 +1,4 @@
-package com.wherethismove.teamfortresstvmobile;
+package com.wherethismove.teamfortresstvmobile.pages.articles;
 
 import android.util.Log;
 import android.webkit.ValueCallback;
@@ -7,6 +7,8 @@ import android.webkit.WebViewClient;
 
 /**
  * Created by John Walter Stockwell on 12/7/2015.
+ * @deprecated
+ * No longer used, found an alternate means of achieving the same result.
  */
 
 public class ArticleWebViewClient extends WebViewClient
@@ -37,17 +39,6 @@ public class ArticleWebViewClient extends WebViewClient
 		/**the below works, but I was unable to get the inclusion of the new css to work*/
 		view.loadUrl("javascript:(function() { "
 				+ "$('#article-wrapper').show().parentsUntil('content').andSelf().siblings().hide();"
-				//+ "$('#wrapper').css({'width': 'inherit', 'padding-bottom': '0px', 'padding-top': '0px', 'padding': '0px'});"
-				//+ "$('body').css({'minwidth': '0px'});"
-				//+"$('document').width( $(window).width() );"
-//				+"var NewStyles = document.createElement('link');"
-//				+"NewStyles.href = 'http://www.wherethismove.com/css/article.css%3fv=3';"
-//				+"NewStyles.rel='stylesheet';"
-//				+"NewStyles.type='text/css';"
-//				//+"document.getElementsByTagName('head')[0].appendChild(NewStyles);"
-//				+"$(\"link[href='/css/base/article.css?v=3']\").replaceWith(NewStyles);"//.attr('href', 'http://www.wherethismove.com/css/article.css%3fv=3');
-//				+"NewStyles.href = 'http://www.wherethismove.com/css/main.css%3fv=29';"
-//				+"$(\"link[href='/css/tf/main.css?v=29']\").replaceWith(NewStyles);"
 				+"})()");
 
 		// My attempt to return a string object containing the html data so I could debug it

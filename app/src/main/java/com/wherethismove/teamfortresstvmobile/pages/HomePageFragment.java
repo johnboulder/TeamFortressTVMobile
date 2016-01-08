@@ -1,4 +1,4 @@
-package com.wherethismove.teamfortresstvmobile;
+package com.wherethismove.teamfortresstvmobile.pages;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.wherethismove.teamfortresstvmobile.R;
+import com.wherethismove.teamfortresstvmobile.utils.ImageLoadTask;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,14 +29,16 @@ import java.io.IOException;
  * to handle interaction events.
  * Use the {@link HomePageFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * TODO handle when website not responding
+ * TODO implement opening of sub_feature articles
+ * TODO serialize the article data
+ *
  */
 public class HomePageFragment extends Fragment
 {
-	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_URL = "url";
 
-	// TODO: Rename and change types of parameters
 	private String mUrl;
 	private Document document;
 
@@ -46,7 +50,6 @@ public class HomePageFragment extends Fragment
 	 *
 	 * @return A new instance of fragment HomePageFragment.
 	 */
-	// TODO: Rename and change types and number of parameters
 	public static HomePageFragment newInstance(String url)
 	{
 		HomePageFragment fragment = new HomePageFragment();
@@ -72,6 +75,7 @@ public class HomePageFragment extends Fragment
 		}
 		else
 			mUrl = "http://www.teamfortress.tv";
+
 		populate();
 	}
 
@@ -101,7 +105,15 @@ public class HomePageFragment extends Fragment
 			protected void onPostExecute(Document result)
 			{
 				//do stuff
-				updateFeaturedArticles(result);
+                try
+                {
+                    updateFeaturedArticles(result);
+                }
+                catch(java.lang.NullPointerException e)
+                {
+                    //TODO tell users website is not responding and kill at
+                    e.printStackTrace();
+                }
 			}
 		}
 		new MyTask().execute();
@@ -142,13 +154,13 @@ public class HomePageFragment extends Fragment
 			// Add the sub features image
 			url = elemSubFeatureImage1.attr("src");
 			ImageView subFeature1 = (ImageView) getView().findViewById(R.id.feature_sub1);
-			new ImageLoadTask(url, subFeature1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT).execute();
+			new ImageLoadTask(url, subFeature1, 480, 270).execute();
 			url = elemSubFeatureImage2.attr("src");
 			ImageView subFeature2 = (ImageView) getView().findViewById(R.id.feature_sub2);
-			new ImageLoadTask(url, subFeature2, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT).execute();
+			new ImageLoadTask(url, subFeature2, 480, 270).execute();
 			url = elemSubFeatureImage3.attr("src");
 			ImageView subFeature3 = (ImageView) getView().findViewById(R.id.feature_sub3);
-			new ImageLoadTask(url, subFeature3, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT).execute();
+			new ImageLoadTask(url, subFeature3, 480, 270).execute();
 
 			TextView featureTitle = (TextView) getView().findViewById(R.id.title_feature_main);
 			featureTitle.setText(elemFeatureTitle.text());

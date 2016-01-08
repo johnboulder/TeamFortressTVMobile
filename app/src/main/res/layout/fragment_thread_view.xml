@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pages.comments.ThreadViewFragment">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/thread_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TEST"
+
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="30dp"/>
+
+        <ListView
+            android:id="@+id/comments_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>

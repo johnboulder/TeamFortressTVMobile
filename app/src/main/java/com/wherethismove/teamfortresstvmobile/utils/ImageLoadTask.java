@@ -1,4 +1,4 @@
-package com.wherethismove.teamfortresstvmobile;
+package com.wherethismove.teamfortresstvmobile.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,13 +20,15 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>
 	private ImageView imageView;
 	private int mViewWidth;
 	private int mViewHeight;
+    /*DNE = DOES NOT EXIST*/
+    private final int DNE = -3;
 
 	public ImageLoadTask(String url, ImageView imageView)
 	{
 		this.url = url;
 		this.imageView = imageView;
-		this.mViewWidth = -1;
-		this.mViewHeight = -1;
+		this.mViewWidth = DNE;
+		this.mViewHeight = DNE;
 	}
 
 	public ImageLoadTask(String url, ImageView imageView, int width, int height)
@@ -35,7 +37,6 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>
 		this.imageView = imageView;
 		this.mViewWidth = width;
 		this.mViewHeight = height;
-
 	}
 
 	@Override
@@ -64,7 +65,12 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>
 		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 		imageView.setAdjustViewBounds(true);
 		ViewGroup.LayoutParams params = imageView.getLayoutParams();
-		if(mViewHeight!=-1 && mViewWidth!=-1)
+        if (mViewHeight>0 && mViewWidth>0)
+        {
+            imageView.setMaxWidth(mViewWidth);
+            imageView.setMaxHeight(mViewHeight);
+        }
+        else if(mViewHeight!=DNE && mViewWidth!=DNE)
 		{
 			params.width = mViewWidth;
 			params.height = mViewHeight;

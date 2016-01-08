@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <!--public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)-->
+    <View
+        android:id="@+id/splitter_top"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+
+        android:layout_alignParentTop="true"
+        android:background="#000"/>
+
+    <TextView
+        android:id="@+id/comment_header"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/splitter_top"/>
+
+    <TextView
+        android:id="@+id/comment_frag_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/splitter_top"/>
+
+    <View
+        android:id="@+id/splitter_header"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+
+        android:layout_below="@+id/comment_header"
+        android:background="#000"/>
+
+    <TextView
+        android:id="@+id/comment_forum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/comment_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/splitter_header"/>
+
+    <TextView
+        android:id="@+id/comment_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/comment_body"/>
+
+</RelativeLayout>

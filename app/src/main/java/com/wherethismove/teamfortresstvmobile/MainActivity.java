@@ -15,7 +15,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebViewFragment;
+
+import com.wherethismove.teamfortresstvmobile.pages.articles.ArticleViewFragment;
+import com.wherethismove.teamfortresstvmobile.pages.comments.ThreadViewFragment;
+import com.wherethismove.teamfortresstvmobile.pages.forums.Forum;
+import com.wherethismove.teamfortresstvmobile.pages.forums.ForumTabFragment;
+import com.wherethismove.teamfortresstvmobile.pages.forums.ForumsViewFragment;
+import com.wherethismove.teamfortresstvmobile.pages.HomePageFragment;
+import com.wherethismove.teamfortresstvmobile.pages.threads.ThreadListViewFragment;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,12 +30,24 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 
+/**
+ * TODO add functionality for updating the current fragment's data
+ */
 public class MainActivity extends AppCompatActivity
-		implements NavigationView.OnNavigationItemSelectedListener, HomePageFragment.OnFragmentInteractionListener, ArticleWebViewFragment.OnFragmentInteractionListener
+		implements NavigationView.OnNavigationItemSelectedListener,
+        HomePageFragment.OnFragmentInteractionListener,
+        ForumTabFragment.OnTabForumSelectedListener,
+        ThreadListViewFragment.OnThreadSelectedListener,
+		//ForumsViewFragment.OnForumSelectedListener,
+		ThreadViewFragment.commentFiller
 {
 	Document document;
-	String siteRoot = "http://www.teamfortress.tv";
-	WebViewFragment articleFragment;
+    public static String siteRoot = "http://www.teamfortress.tv";
+    private final String FORUMS = "/forums";
+    private final String THREADS = "/threads";
+    private final String SCHEDULE = "/schedule";
+    private final String NEWS = "/news";
+    private final String GALLERIES = "/galleries";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -59,7 +78,11 @@ public class MainActivity extends AppCompatActivity
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 
+		openHome(null);
+	}
 
+	public void openHome(View v)
+	{
 		/*Populate the home screen*****************************************************************/
 
 		HomePageFragment home = new HomePageFragment();
@@ -108,7 +131,7 @@ public class MainActivity extends AppCompatActivity
 
 		Bundle args = new Bundle();
 		args.putString("url", siteRoot+articleSubdomain);
-		ArticleWebViewFragment article = new ArticleWebViewFragment();
+		ArticleViewFragment article = new ArticleViewFragment();
 		article.setArguments(args);
 
 		// Replace fragment
@@ -145,17 +168,18 @@ public class MainActivity extends AppCompatActivity
 			drawer.closeDrawer(GravityCompat.START);
 		}
 
-		else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+		else if (getSupportFragmentManager().getBackStackEntryCount() > 0)
+        {
 			getSupportFragmentManager().popBackStack();
 		}
-//		else if
-//		{
-//			this.finish();
-//		}
 		else
 		{
-			super.onBackPressed();
+			this.finish();
 		}
+//		else
+//		{
+//			super.onBackPressed();
+//		}
 	}
 
 	@Override
@@ -183,7 +207,6 @@ public class MainActivity extends AppCompatActivity
 		return super.onOptionsItemSelected(item);
 	}
 
-	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
 	public boolean onNavigationItemSelected(MenuItem item)
 	{
@@ -192,23 +215,48 @@ public class MainActivity extends AppCompatActivity
 
 		if (id == R.id.nav_home)
 		{
-			// Handle the camera action
+            //http://www.teamfortress.tv/
+			Bundle args = new Bundle();
+			args.putString("url", siteRoot);
+            args.putInt("layout", R.layout.fragment_home_page);
+			HomePageFragment home = new HomePageFragment();
+            home.setArguments(args);
+
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().replace(R.id.fragment_container,home, null).addToBackStack(null).commit();
 		}
 		else if (id == R.id.nav_threads)
 		{
+			//http://www.teamfortress.tv/threads
+			// Replace fragment
+            Bundle args = new Bundle();
+            args.putString("url", siteRoot+THREADS);
+			args.putInt("layout", R.layout.fragment_thread_list_view);
+            ThreadListViewFragment threads = new ThreadListViewFragment();
+            threads.setArguments(args);
 
+			FragmentManager fm = getSupportFragmentManager();
+			fm.beginTransaction().replace(R.id.fragment_container,threads, null).addToBackStack(null).commit();
 		}
 		else if (id == R.id.nav_forums)
 		{
+            //http://www.teamfortress.tv/forums
+			Bundle args = new Bundle();
+			args.putString("url", siteRoot+FORUMS);
+            args.putInt("layout", R.layout.fragment_forums_tabbed_view);
+			ForumsViewFragment forums = new ForumsViewFragment();
+			forums.setArguments(args);
 
+			FragmentManager fm = getSupportFragmentManager();
+			fm.beginTransaction().replace(R.id.fragment_container,forums, null).addToBackStack(null).commit();
 		}
 		else if (id == R.id.nav_schedule)
 		{
-
+            //http://www.teamfortress.tv/schedule
 		}
 		else if (id == R.id.nav_news)
 		{
-
+            //http://www.teamfortress.tv/news
 		}
 		else if (id == R.id.nav_galleries)
 		{
@@ -234,4 +282,41 @@ public class MainActivity extends AppCompatActivity
 
 	}
 
+    @Override
+    public void openThread(String url)
+    {
+        Bundle args = new Bundle();
+        args.putString("url", url);
+        args.putInt("layout", R.layout.fragment_thread_view);
+        ThreadViewFragment thread = new ThreadViewFragment();
+        thread.setArguments(args);
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().replace(R.id.fragment_container,thread, null).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void fillComments(String url, Document d)
+    {
+    }
+
+//    @Override
+//    public void onForumSelected(Forum f)
+//    {
+//
+//    }
+
+	@Override
+	public void onTabForumSelected(Forum f)
+	{
+		// TODO merge the code for opening thread_list_views from this method and the navigation_drawer above
+		Bundle args = new Bundle();
+		args.putString("url", f.getPageUrl(1));
+		args.putInt("layout", R.layout.fragment_thread_list_view);
+		ThreadListViewFragment threads = new ThreadListViewFragment();
+		threads.setArguments(args);
+
+		FragmentManager fm = getSupportFragmentManager();
+		fm.beginTransaction().replace(R.id.fragment_container,threads, null).addToBackStack(null).commit();
+	}
 }
