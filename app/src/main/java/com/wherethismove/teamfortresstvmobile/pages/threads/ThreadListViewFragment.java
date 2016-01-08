@@ -76,7 +76,7 @@ public class ThreadListViewFragment extends PageViewFragment
                     @Override
                     public void onClick(View v)
                     {
-                        onThreadSelected(itemValue.getPageUrl(1));
+                        onThreadSelected(itemValue.getThreadUrl());
                     }
                 });
 

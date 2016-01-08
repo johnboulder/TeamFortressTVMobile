@@ -57,4 +57,9 @@ public class ForumThread
     {
         return mUrl+"/?page="+pageNumber.toString();
     }
+
+    public String getThreadUrl()
+    {
+        return mUrl;
+    }
 }

@@ -7,6 +7,7 @@ import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 
 /**
  * Created by stockweezie on 1/4/2016.
+ * TODO when a GetNewPageDataTask returns a 404 we need to restrict any more tasks from being created
  */
 public class LoadListItemOnScrollListener implements AbsListView.OnScrollListener
 {
@@ -33,7 +34,7 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
         switch(view.getId())
         {
             case R.id.thread_list:
-                final int lastItem = firstVisibleItem + visibleItemCount;
+                int lastItem = firstVisibleItem + visibleItemCount;
                 if(lastItem == totalItemCount)
                 {
                     if(previousLastItem!=lastItem){
@@ -44,6 +45,36 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
                         mPage++;
                     }
                 }
+                break;
+
+            case R.id.list_view_article_body_and_comments:
+                lastItem = firstVisibleItem + visibleItemCount;
+                if(lastItem == totalItemCount)
+                {
+                    if(previousLastItem!=lastItem){
+                        //to avoid multiple calls for last item
+                        previousLastItem = lastItem;
+
+                        new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"/?page="+mPage.toString());
+                        mPage++;
+                    }
+                }
+                break;
+
+            case R.id.comments_list:
+                lastItem = firstVisibleItem + visibleItemCount;
+                if(lastItem == totalItemCount)
+                {
+                    if(previousLastItem!=lastItem){
+                        //to avoid multiple calls for last item
+                        previousLastItem = lastItem;
+
+                        new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"/?page="+mPage.toString());
+                        mPage++;
+                    }
+                }
+                break;
+
         }
     }
 }

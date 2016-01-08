@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.articles.ArticleViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.comments.ThreadViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.forums.Forum;
@@ -130,7 +131,8 @@ public class MainActivity extends AppCompatActivity
 		String articleSubdomain = elemFeature.attr("href");
 
 		Bundle args = new Bundle();
-		args.putString("url", siteRoot+articleSubdomain);
+		args.putString(PageViewFragment.ARG_URL, siteRoot+articleSubdomain);
+		args.putInt(PageViewFragment.ARG_LAYOUT, R.layout.fragment_article_view);
 		ArticleViewFragment article = new ArticleViewFragment();
 		article.setArguments(args);
 
@@ -218,7 +220,7 @@ public class MainActivity extends AppCompatActivity
             //http://www.teamfortress.tv/
 			Bundle args = new Bundle();
 			args.putString("url", siteRoot);
-            args.putInt("layout", R.layout.fragment_home_page);
+            args.putInt(PageViewFragment.ARG_LAYOUT, R.layout.fragment_home_page);
 			HomePageFragment home = new HomePageFragment();
             home.setArguments(args);
 
@@ -231,7 +233,7 @@ public class MainActivity extends AppCompatActivity
 			// Replace fragment
             Bundle args = new Bundle();
             args.putString("url", siteRoot+THREADS);
-			args.putInt("layout", R.layout.fragment_thread_list_view);
+			args.putInt(PageViewFragment.ARG_LAYOUT, R.layout.fragment_thread_list_view);
             ThreadListViewFragment threads = new ThreadListViewFragment();
             threads.setArguments(args);
 
@@ -243,7 +245,7 @@ public class MainActivity extends AppCompatActivity
             //http://www.teamfortress.tv/forums
 			Bundle args = new Bundle();
 			args.putString("url", siteRoot+FORUMS);
-            args.putInt("layout", R.layout.fragment_forums_tabbed_view);
+            args.putInt(PageViewFragment.ARG_LAYOUT, R.layout.fragment_forums_tabbed_view);
 			ForumsViewFragment forums = new ForumsViewFragment();
 			forums.setArguments(args);
 
@@ -287,7 +289,7 @@ public class MainActivity extends AppCompatActivity
     {
         Bundle args = new Bundle();
         args.putString("url", url);
-        args.putInt("layout", R.layout.fragment_thread_view);
+        args.putInt(PageViewFragment.ARG_LAYOUT, R.layout.fragment_thread_view);
         ThreadViewFragment thread = new ThreadViewFragment();
         thread.setArguments(args);
 

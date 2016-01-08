@@ -15,6 +15,10 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+/**
+ * TODO Implement this class with static forum list values, where when onSwipeRefresh occurs
+ * the only values that are updated are the recent activity in each subforum
+ */
 public class ForumTabFragment extends PageViewFragment
 {
     private OnTabForumSelectedListener mListener;
@@ -122,6 +126,8 @@ public class ForumTabFragment extends PageViewFragment
         mListener = null;
     }
 
+    // Implemented by the activity that contains this fragment.
+    // Used for swapping out the forum fragment, and swapping in the
     public interface OnTabForumSelectedListener {
         void onTabForumSelected(Forum f);
     }
