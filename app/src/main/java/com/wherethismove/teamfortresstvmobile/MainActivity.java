@@ -9,12 +9,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.articles.ArticleViewFragment;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity
 {
 	Document document;
     public static String siteRoot = "http://www.teamfortress.tv";
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private final String FORUMS = "/forums";
     private final String THREADS = "/threads";
     private final String SCHEDULE = "/schedule";

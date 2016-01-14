@@ -15,12 +15,14 @@ import java.io.IOException;
  *
  * TODO figure out how to implement the second paramType of AsyncTask (the progress type) so that the
  * list being updated shows a list_item at the bottom with the words "Loading" animated
+ *
+ * TODO add a safety net for when the result is null
  */
 public class GetNewPageDataTask extends AsyncTask<String, Void, Document>{
 
     private PageViewFragment.RefreshFragmentListCallback mFragmentCallback;
 
-    GetNewPageDataTask(PageViewFragment.RefreshFragmentListCallback callback)
+    public GetNewPageDataTask(PageViewFragment.RefreshFragmentListCallback callback)
     {
         mFragmentCallback = callback;
     }

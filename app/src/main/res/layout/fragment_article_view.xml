@@ -4,11 +4,15 @@
              android:layout_height="match_parent"
              tools:context=".pages.articles.ArticleViewFragment">
 
-    <ListView
-        android:id="@+id/list_view_article_body_and_comments"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/list_view_article_body_and_comments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </ListView>
+        </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

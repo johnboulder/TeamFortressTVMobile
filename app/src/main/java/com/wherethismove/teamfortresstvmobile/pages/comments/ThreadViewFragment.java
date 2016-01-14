@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.wherethismove.teamfortresstvmobile.R;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
+import com.wherethismove.teamfortresstvmobile.utils.GetNewPageDataTask;
 import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
 
 import org.jsoup.Jsoup;
@@ -32,6 +34,7 @@ public class ThreadViewFragment extends PageViewFragment {
     private CommentAdapter mAdapter;
     private ArrayList<ThreadComment> listItems;
     protected commentFiller mListener;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     public ThreadViewFragment() {
         // Required empty public constructor
@@ -49,10 +52,11 @@ public class ThreadViewFragment extends PageViewFragment {
     @Override
     protected void initializeList(View v)
     {
+
         // Set the thread title
+        listItems = new ArrayList<>();
         Element headerTitle = document.select("div.thread-header-title").first();
-        TextView threadTitle = (TextView) v.findViewById(R.id.thread_header);
-        threadTitle.setText(headerTitle.text());
+        listItems.add(new ThreadComment(headerTitle.text(), null, null, null, null, null, null));
 
         populateList();
 
@@ -77,6 +81,41 @@ public class ThreadViewFragment extends PageViewFragment {
                 },
                 mUrl
         ));
+
+        //TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
+        mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+
+            @Override
+            public void onRefresh()
+            {
+                Integer page;
+                Integer totalItemCount = listItems.size()-1;
+                if(totalItemCount%30 == 0)
+                {
+                    page = (listItems.size()/30)+1;
+                }
+                else
+                {
+                    // Ensures totalItemCount is a rounded off number, like 30, 60, 90, etc.
+                    page = ((totalItemCount+(30-totalItemCount%30))/30)+1;
+                }
+                // Take listItems.size()%30, if there's a remainder, stay on the page we have
+                new GetNewPageDataTask(new RefreshFragmentListCallback()
+                {
+                    @Override
+                    public void refreshList(Document doc)
+                    {
+                        document = doc;
+                        populateList();
+                        mAdapter.notifyDataSetChanged();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }).execute(mUrl+"/?page="+page.toString());
+            }
+        });
+
+
     }
 
     @Override
@@ -85,8 +124,8 @@ public class ThreadViewFragment extends PageViewFragment {
         if(listItems == null)
             listItems = new ArrayList<>();
 
-        Elements comments = document.select("div.post");
         Element forum = document.select("div.thread-header-desc").first();
+        Elements comments = document.select("div.post");
 
         for(int i = 0; i<comments.size(); i++)
         {
@@ -110,6 +149,44 @@ public class ThreadViewFragment extends PageViewFragment {
             ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(),body.html(), footer.text(), postNumber.text(), mUrl+postNumber.text());
             listItems.add(tc);
         }
+    }
+
+    // TODO merge this with populateList()
+    protected void updatePageList()
+    {
+        // add comments to listItems from listItems.size() to the end of comments
+        Element forum = document.select("div.thread-header-desc").first();
+        Elements comments = document.select("div.post");
+
+        // Calculate the page we're on
+        int page = (listItems.size()/30)+1;
+        // Calculate the first comment we need grab
+        int start = (listItems.size())%30;
+        for(int i = start; i<comments.size(); i++)
+        {
+            Element curComment = comments.get(i);
+            Element frags;
+            if(curComment.className().equals("post self"))
+                frags = document.select("span#thread-frag-count").first();
+            else
+                frags = curComment.select("span.post-frag-count").first();
+
+            // Get the post number. Alternate selector "a.post-anchor"
+            Element postNumber = curComment.select("div.post-num").first();
+            // Get the header
+            Element header = curComment.select("a.post-author").first();
+            // Get the body
+            Element body = curComment.select("div.post-body").first();
+            // Get the footer
+            Element footer = curComment.select("div.post-footer").first();
+
+            //public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)
+            ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(),body.html(), footer.text(), postNumber.text(), mUrl+postNumber.text());
+            listItems.add(tc);
+        }
+
+        mAdapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public void populateComments(String s) {

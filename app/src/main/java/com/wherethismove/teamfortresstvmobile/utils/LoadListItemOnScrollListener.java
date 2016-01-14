@@ -40,9 +40,16 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
                     if(previousLastItem!=lastItem){
                         //to avoid multiple calls for last item
                         previousLastItem = lastItem;
-
+                        if(totalItemCount%30 == 0)
+                        {
+                            mPage = (totalItemCount/30)+1;
+                        }
+                        else
+                        {
+                            // Ensures totalItemCount is a rounded off number, like 30, 60, 90, etc.
+                            mPage = ((totalItemCount+(30-totalItemCount%30))/30)+1;
+                        }
                         new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"/?page="+mPage.toString());
-                        mPage++;
                     }
                 }
                 break;
@@ -54,9 +61,18 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
                     if(previousLastItem!=lastItem){
                         //to avoid multiple calls for last item
                         previousLastItem = lastItem;
-
+                        // Ensures we're not counting the article item in the following calculations
+                        totalItemCount-=1;
+                        if((totalItemCount)%30 == 0)
+                        {
+                            mPage = (totalItemCount/30)+1;
+                        }
+                        else
+                        {
+                            // Ensures totalItemCount is a rounded off number, like 30, 60, 90, etc.
+                            mPage = ((totalItemCount+(30-totalItemCount%30))/30)+1;
+                        }
                         new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"/?page="+mPage.toString());
-                        mPage++;
                     }
                 }
                 break;
@@ -65,12 +81,24 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
                 lastItem = firstVisibleItem + visibleItemCount;
                 if(lastItem == totalItemCount)
                 {
-                    if(previousLastItem!=lastItem){
+                    //TODO find better solution for limiting when the page attempts to load more comments
+                    // totalItemCount>=30 is included here for threads with less than 30 comments trying to load the next page when
+                    // the last comment is immediately visible
+                    if(previousLastItem!=lastItem && totalItemCount>=30){
                         //to avoid multiple calls for last item
                         previousLastItem = lastItem;
-
+                        // Ensures we're not counting the title item in the following calculations
+                        totalItemCount-=1;
+                        if((totalItemCount)%30 == 0)
+                        {
+                            mPage = (totalItemCount/30)+1;
+                        }
+                        else
+                        {
+                            // Ensures totalItemCount is a rounded off number, like 30, 60, 90, etc.
+                            mPage = ((totalItemCount+(30-totalItemCount%30))/30)+1;
+                        }
                         new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"/?page="+mPage.toString());
-                        mPage++;
                     }
                 }
                 break;

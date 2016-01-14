@@ -18,6 +18,9 @@ import java.util.ArrayList;
  */
 public class CommentAdapter extends BaseAdapter
 {
+
+    private final int ITEM_TITLE = 0;
+    private final int ITEM_COMMENT = 1;
     protected Context mContext;
     protected ArrayList<ThreadComment> mData;
     protected static LayoutInflater inflater = null;
@@ -27,6 +30,12 @@ public class CommentAdapter extends BaseAdapter
         this.mContext = context;
         this.mData = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public int getItemViewType(int position)
+    {
+        return (position == 0)? ITEM_TITLE : ITEM_COMMENT;
     }
 
     @Override
@@ -50,26 +59,39 @@ public class CommentAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        int viewType = getItemViewType(position);
+
         View vi = convertView;
 
-        if (vi == null)
+        if(viewType == 1)
+        {
+            //ListView recycles views and will pass the wrong vi...
             vi = inflater.inflate(R.layout.comment_list_item, null);
 
-        ThreadComment current = mData.get(position);
-        TextView posts = (TextView) vi.findViewById(R.id.comment_header);
+            ThreadComment current = mData.get(position);
 
-        posts.setText(current.getHeaderText());
+            TextView posts = (TextView) vi.findViewById(R.id.comment_header);
+            posts.setText(current.getHeaderText());
 
-        TextView frags = (TextView) vi.findViewById(R.id.comment_frag_count);
-        frags.setText(current.getFragCount());
+            TextView frags = (TextView) vi.findViewById(R.id.comment_frag_count);
+            frags.setText(current.getFragCount());
 
-        TextView body = (TextView) vi.findViewById(R.id.comment_body);
-        body.setText(Html.fromHtml(current.getBody()));
-        body.setAutoLinkMask(Linkify.WEB_URLS);
+            TextView body = (TextView) vi.findViewById(R.id.comment_body);
+            body.setText(Html.fromHtml(current.getBody()));
+            body.setAutoLinkMask(Linkify.WEB_URLS);
 
-        TextView footer = (TextView) vi.findViewById(R.id.comment_footer);
-        footer.setText(current.getFooter());
+            TextView footer = (TextView) vi.findViewById(R.id.comment_footer);
+            footer.setText(current.getFooter());
+        }
+        else
+        {
+            //ListView recycles views and will pass the wrong vi...
+            vi = inflater.inflate(R.layout.list_item_title, null);
 
+            ThreadComment current = mData.get(position);
+            TextView title = (TextView) vi.findViewById(R.id.thread_title);
+            title.setText(current.getHeaderText());
+        }
         return vi;
     }
 }
