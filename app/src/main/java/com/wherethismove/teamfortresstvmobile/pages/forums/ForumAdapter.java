@@ -50,7 +50,7 @@ public class ForumAdapter extends BaseAdapter
     {
         View vi = convertView;
         if (vi == null)
-            vi = inflater.inflate(R.layout.forum_list_item, null);
+            vi = inflater.inflate(R.layout.list_item_forum, null);
 
         Forum current = mData.get(position);
         TextView posts = (TextView) vi.findViewById(R.id.posts);

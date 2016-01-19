@@ -53,4 +53,9 @@ public class Forum
     {
         return mUrl+"/?page="+pageNumber.toString();
     }
+
+    public String getForumUrl()
+    {
+        return mUrl;
+    }
 }

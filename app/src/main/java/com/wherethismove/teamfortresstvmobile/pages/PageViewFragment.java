@@ -3,6 +3,7 @@ package com.wherethismove.teamfortresstvmobile.pages;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,9 @@ public abstract class PageViewFragment extends Fragment
     public static final String ARG_LAYOUT = "layout";
     protected Document document;
     protected String mUrl;
+    protected String mBaseUrl;
     protected int mLayout;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
     // TODO make a parent object for ThreadComment, ForumThread, and Forum to use here in listItems
     // This way initialization of listItems can be done here
     //protected ArrayList<Object> listItems;
@@ -32,7 +35,8 @@ public abstract class PageViewFragment extends Fragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 
-            mUrl = getArguments().getString(ARG_URL);
+            mBaseUrl = getArguments().getString(ARG_URL);
+            mUrl = mBaseUrl+"/?page=1";
             mLayout = getArguments().getInt(ARG_LAYOUT);
         }
     }

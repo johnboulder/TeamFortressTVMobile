@@ -20,7 +20,6 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
     {
         mFragmentCallback = callback;
         mUrl = url;
-        mPage = 2;
     }
 
     @Override

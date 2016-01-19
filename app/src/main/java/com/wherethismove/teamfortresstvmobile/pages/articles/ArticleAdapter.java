@@ -40,10 +40,10 @@ public class ArticleAdapter extends CommentAdapter
         if ( viewType == 1)
         {
             // TODO find best way to do this, may be using CommentAdapter.getView()?
-            // to do so, must check that layout id is comment_list_item, must initialize
+            // to do so, must check that layout id is list_item_comment, must initialize
             // the class, and must ensure that none of those things lead to UI irregularities
 
-            vi = inflater.inflate(R.layout.comment_list_item, null);
+            vi = inflater.inflate(R.layout.list_item_comment, null);
 
             ThreadComment current = mData.get(position);
             TextView posts = (TextView) vi.findViewById(R.id.comment_header);
@@ -63,7 +63,7 @@ public class ArticleAdapter extends CommentAdapter
         }
         else
         {
-            vi = inflater.inflate(R.layout.article_list_item, null);
+            vi = inflater.inflate(R.layout.list_item_article, null);
             ThreadComment current = mData.get(position);
 
             TextView title = (TextView) vi.findViewById(R.id.article_title);

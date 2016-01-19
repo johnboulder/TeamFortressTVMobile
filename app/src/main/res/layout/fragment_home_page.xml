@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/feature_main"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="TEST TEST TEST"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/desc_feature_main"
@@ -46,21 +45,81 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/feature_sub1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"/>
-                <ImageView
-                    android:id="@+id/feature_sub2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"/>
-                <ImageView
-                    android:id="@+id/feature_sub3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/feature_sub1"
+                        android:layout_width="480px"
+                        android:layout_height="270px"
+                        android:adjustViewBounds="true"
+                        android:onClick="openSubFeature1"/>
+                    <TextView
+                        android:id="@+id/feature_sub_title1"
+                        android:layout_width="480px"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/feature_sub1"
+
+                        android:lines= "1"
+                        android:ems= "3"
+                        android:gravity= "center_horizontal"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:textSize="9sp"
+                        android:singleLine="true"
+                        android:paddingBottom="5dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/feature_sub2"
+                        android:layout_width="480px"
+                        android:layout_height="270px"
+                        android:adjustViewBounds="true"
+                        android:onClick="openSubFeature2"/>
+                    <TextView
+                        android:id="@+id/feature_sub_title2"
+                        android:layout_width="480px"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/feature_sub2"
+
+                        android:lines= "1"
+                        android:ems= "3"
+                        android:gravity= "center_horizontal"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:textSize="9sp"
+                        android:singleLine="true"
+                        android:paddingBottom="5dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/feature_sub3"
+                        android:layout_width="480px"
+                        android:layout_height="270px"
+                        android:adjustViewBounds="true"
+                        android:onClick="openSubFeature3"/>
+                    <TextView
+                        android:id="@+id/feature_sub_title3"
+                        android:layout_width="480px"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/feature_sub3"
+
+                        android:lines= "1"
+                        android:ems= "3"
+                        android:gravity= "center_horizontal"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:textSize="9sp"
+                        android:singleLine="true"
+                        android:paddingBottom="5dp"/>
+                </RelativeLayout>
+
 
             </LinearLayout>
         </HorizontalScrollView>

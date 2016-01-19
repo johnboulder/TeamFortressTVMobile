@@ -3,16 +3,20 @@ package com.wherethismove.teamfortresstvmobile.pages.threads;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.ToggleButton;
 
 import com.wherethismove.teamfortresstvmobile.MainActivity;
 import com.wherethismove.teamfortresstvmobile.R;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
+import com.wherethismove.teamfortresstvmobile.utils.GetNewPageDataTask;
 import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
 
 import org.jsoup.nodes.Document;
@@ -108,7 +112,74 @@ public class ThreadListViewFragment extends PageViewFragment
                 mUrl
         ));
 
+        //TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
+        mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 
+            @Override
+            public void onRefresh()
+            {
+                // Just get the page again, the site already refreshes the data
+                new GetNewPageDataTask(new RefreshFragmentListCallback()
+                {
+                    // TODO refactor so only the changed portions of each listItem are changed
+                    @Override
+                    public void refreshList(Document doc)
+                    {
+                        listItems.clear();
+                        mAdapter.notifyDataSetChanged();
+                        document = doc;
+                        populateList();
+                        mAdapter.notifyDataSetChanged();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }).execute(mUrl);
+            }
+        });
+
+        RadioGroup rg = (RadioGroup) getView().findViewById(R.id.radio_group_sort);
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
+
+                String url = mBaseUrl;
+                for (int j = 0; j < radioGroup.getChildCount(); j++)
+                {
+                    final ToggleButton view = (ToggleButton) radioGroup.getChildAt(j);
+                    view.setChecked(view.getId() == i);
+                }
+                switch(i)
+                {
+                    case R.id.button_sort_active:
+                        url = mBaseUrl+"/?sort=active";
+                        break;
+                    case R.id.button_sort_hot:
+                        url = mBaseUrl+"/?sort=hot";
+                        break;
+                    case R.id.button_sort_new:
+                        url = mBaseUrl+"/?sort=new";
+                        break;
+                    case R.id.button_sort_top:
+                        url = mBaseUrl+"/?sort=top";
+                        break;
+                }
+
+                new GetNewPageDataTask(new RefreshFragmentListCallback()
+                {
+                    // TODO refactor so only the changed portions of each listItem are changed
+                    @Override
+                    public void refreshList(Document doc)
+                    {
+                        listItems.clear();
+                        mAdapter.notifyDataSetChanged();
+                        document = doc;
+                        populateList();
+                        mAdapter.notifyDataSetChanged();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }).execute(url);
+            }
+        });
     }
 
     @Override
@@ -133,8 +204,7 @@ public class ThreadListViewFragment extends PageViewFragment
             String threadURLWithoutPage = MainActivity.siteRoot+threadURL;
             // Get the Forum it's in
             // Only appears when in the "Threads" section of the website
-            try{String forum = mainData.select("div.description").first().text();}
-            catch(NullPointerException e){}
+            Element description = mainData.select("div.description").first();
             // Get the posts
             String posts = curThread.select("span.post-count").first().text();
             // Get the pages
@@ -144,7 +214,7 @@ public class ThreadListViewFragment extends PageViewFragment
             // Get the postTime (use div.description for username+postTime+forum)
             String postTime = mainData.select("span.date-eta").text();
 
-            ForumThread ft = new ForumThread(posts, pages.toString(), op, title, postTime, threadURLWithoutPage);
+            ForumThread ft = new ForumThread(posts, pages.toString(), op, title, description.text(), frags.text(), threadURLWithoutPage);
 
             listItems.add(ft);
         }

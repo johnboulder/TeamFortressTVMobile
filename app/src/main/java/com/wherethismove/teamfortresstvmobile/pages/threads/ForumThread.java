@@ -17,13 +17,14 @@ public class ForumThread
     private String mUrl;
 
 
-    public ForumThread(String responses, String pages, String op, String title, String postTime, String url)
+    public ForumThread(String responses, String pages, String op, String title, String postTime, String frags, String url)
     {
         mNumberResponses = "Posts: "+responses;
         mNumberPages = "Pages: "+pages;
         mOriginalPoster = "Posted by: "+op;
         mThreadTitle = title;
         mThreadSubmissionTime = "Posted: "+postTime;
+        mUpvotes = frags;
         //TODO check for malformed url
         mUrl = url;
     }
@@ -61,5 +62,10 @@ public class ForumThread
     public String getThreadUrl()
     {
         return mUrl;
+    }
+
+    public String getFrags()
+    {
+        return mUpvotes;
     }
 }

@@ -1,10 +1,15 @@
 <resources>
-    <string name="app_name">TeamFortressTVMobile</string>
+    <string name="app_name">TF.TV</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="button_sort_hot">Hot</string>
+    <string name="button_sort_active">Active</string>
+    <string name="button_sort_new">New</string>
+    <string name="button_sort_top">Top</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

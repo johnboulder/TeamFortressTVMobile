@@ -66,7 +66,7 @@ public class CommentAdapter extends BaseAdapter
         if(viewType == 1)
         {
             //ListView recycles views and will pass the wrong vi...
-            vi = inflater.inflate(R.layout.comment_list_item, null);
+            vi = inflater.inflate(R.layout.list_item_comment, null);
 
             ThreadComment current = mData.get(position);
 

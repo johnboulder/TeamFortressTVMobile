@@ -4,36 +4,36 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@android:drawable/ic_menu_help"
+            android:icon="@drawable/ic_home_white_48dp"
             android:title="Home"
             android:checked="true"/>
         <item
             android:id="@+id/nav_threads"
-            android:icon="@android:drawable/ic_menu_help"
+            android:icon="@drawable/ic_message_text_white_48dp"
             android:title="Threads"/>
         <item
             android:id="@+id/nav_forums"
-            android:icon="@android:drawable/ic_menu_help"
+            android:icon="@drawable/ic_message_white_48dp"
             android:title="Forums"/>
-        <item
-            android:id="@+id/nav_schedule"
-            android:icon="@android:drawable/ic_menu_help"
-            android:title="Schedule"/>
-        <item
-            android:id="@+id/nav_news"
-            android:icon="@android:drawable/ic_menu_help"
-            android:title="News"/>
-        <item
-            android:id="@+id/nav_galleries"
-            android:icon="@android:drawable/ic_menu_help"
-            android:title="Galleries"/>
-        <item
-            android:id="@+id/nav_streams"
-            android:icon="@android:drawable/ic_menu_help"
-            android:title="Streams"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_schedule"-->
+            <!--android:icon="@android:drawable/ic_menu_help"-->
+            <!--android:title="Schedule"/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_news"-->
+            <!--android:icon="@android:drawable/ic_menu_help"-->
+            <!--android:title="News"/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_galleries"-->
+            <!--android:icon="@android:drawable/ic_menu_help"-->
+            <!--android:title="Galleries"/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_streams"-->
+            <!--android:icon="@android:drawable/ic_menu_help"-->
+            <!--android:title="Streams"/>-->
         <item
             android:id="@+id/nav_about"
-            android:icon="@android:drawable/ic_menu_help"
+            android:icon="@android:drawable/ic_dialog_info"
             android:title="About"/>
     </group>
 </menu>

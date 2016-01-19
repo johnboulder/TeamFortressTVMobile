@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:minHeight="50dp">
 
     <RelativeLayout
         android:id="@+id/main_group"
@@ -13,40 +14,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true"
+            android:visibility="gone"/>
 
         <View
             android:id="@+id/pages_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pages"/>
+            android:layout_below="@+id/pages"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/posts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/pages_bottom"/>
-
-        <TextView
-            android:id="@+id/poster"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_above="@+id/post_time"/>
+            android:layout_alignTop="@+id/pages_bottom"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/thread_frag_count"
+
             android:textSize="15dp"
             android:textStyle="bold"
-
-            android:paddingRight="60dp"
-            android:paddingBottom="15dp"
-
+            android:textColor="#FF0C6D97"
             android:ellipsize="none"
             android:maxLines="4"
             android:scrollHorizontally="false"/>
@@ -55,14 +50,22 @@
             android:id="@+id/post_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"/>
+            android:layout_toRightOf="@+id/thread_frag_count"
+            android:layout_below="@id/title"
+
+            android:textSize="9dp"
+            android:ellipsize="none"
+            android:maxLines="2"/>
 
         <TextView
-            android:id="@+id/tv_forum"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/thread_frag_count"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentLeft="true"
+            android:textSize="40dp"
+            />
+
     </RelativeLayout>
 
     <Button

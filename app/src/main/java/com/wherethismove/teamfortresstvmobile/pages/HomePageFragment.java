@@ -131,12 +131,18 @@ public class HomePageFragment extends Fragment
 
 		Element elemSubFeatureImage1 = subFeatureImages.get(0);
 		Element elemSubFeatureTitle1 = subFeatureTitles.get(0);
+		TextView subtitle1 = (TextView) getView().findViewById(R.id.feature_sub_title1);
+		subtitle1.setText(elemSubFeatureTitle1.text());
 
 		Element elemSubFeatureImage2 = subFeatureImages.get(1);
 		Element elemSubFeatureTitle2 = subFeatureTitles.get(1);
+		TextView subtitle2 = (TextView) getView().findViewById(R.id.feature_sub_title2);
+		subtitle2.setText(elemSubFeatureTitle2.text());
 
 		Element elemSubFeatureImage3 = subFeatureImages.get(2);
 		Element elemSubFeatureTitle3 = subFeatureTitles.get(2);
+		TextView subtitle3 = (TextView) getView().findViewById(R.id.feature_sub_title3);
+		subtitle3.setText(elemSubFeatureTitle3.text());
 
 		//id = main-feature-title-wrapper
 		//id = main-feature-desc

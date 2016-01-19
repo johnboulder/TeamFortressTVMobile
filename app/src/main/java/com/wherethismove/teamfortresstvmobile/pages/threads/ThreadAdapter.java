@@ -51,9 +51,9 @@ public class ThreadAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        View vi = convertView;
-        if (vi == null)
-            vi = inflater.inflate(R.layout.thread_list_item, null);
+//        View vi = convertView;
+//        if (vi == null)
+        View vi = inflater.inflate(R.layout.list_item_thread, null);
 
         ForumThread current = mData.get(position);
         TextView posts = (TextView) vi.findViewById(R.id.posts);
@@ -62,8 +62,11 @@ public class ThreadAdapter extends BaseAdapter
         TextView pages = (TextView) vi.findViewById(R.id.pages);
         pages.setText(current.getNumberOfPages());
 
-        TextView poster = (TextView) vi.findViewById(R.id.poster);
-        poster.setText(current.getOPName());
+//        TextView poster = (TextView) vi.findViewById(R.id.poster);
+//        poster.setText(current.getOPName());
+
+        TextView frags = (TextView) vi.findViewById(R.id.thread_frag_count);
+        frags.setText(current.getFrags());
 
         TextView title = (TextView) vi.findViewById(R.id.title);
         title.setText(current.getTitle());

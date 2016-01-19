@@ -1,12 +1,14 @@
 package com.wherethismove.teamfortresstvmobile.pages.articles;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ListView;
 
 import com.wherethismove.teamfortresstvmobile.R;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.comments.ThreadComment;
+import com.wherethismove.teamfortresstvmobile.utils.GetNewPageDataTask;
 import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
 
 import org.jsoup.nodes.Document;
@@ -15,6 +17,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
+// TODO make this class a child of ThreadViewFragment
 public class ArticleViewFragment extends PageViewFragment
 {
 	private ArrayList<ThreadComment> listItems;
@@ -33,21 +36,8 @@ public class ArticleViewFragment extends PageViewFragment
 	protected void initializeList(View v)
 	{
 		final ListView lv = (ListView) v.findViewById(R.id.list_view_article_body_and_comments);
-		Element content = document.select("#content").first();
-		// Set the thread title
-		Element title = content.select("div.thread-header-title").first();
-		Element author = content.select("div#article-meta").first();
-		Element body = content.select("div#article-body").first();
-		Element frags = document.select("span#thread-frag-count").first();
-		Element forum = document.select("div.thread-header-desc").first();
 
-		ThreadComment article = new ThreadComment(title.text(), frags.text(), author.text() + forum.text(), body.html(), null, null, mUrl);
-
-		if(listItems == null)
-			listItems = new ArrayList<>();
-
-		listItems.add(article);
-
+        populateArticle();
 		populateList();
 
 		mAdapter = new ArticleAdapter(v.getContext(), listItems);
@@ -67,9 +57,53 @@ public class ArticleViewFragment extends PageViewFragment
 						mAdapter.notifyDataSetChanged();
 					}
 				},
-				mUrl
+				mBaseUrl
 		));
+
+        //TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
+        mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+
+            @Override
+            public void onRefresh()
+            {
+                // Just get the page again, the site already refreshes the data
+                new GetNewPageDataTask(new RefreshFragmentListCallback()
+                {
+                    // TODO refactor so only the changed portions of each listItem are changed
+                    @Override
+                    public void refreshList(Document doc)
+                    {
+                        listItems.clear();
+                        mAdapter.notifyDataSetChanged();
+                        document = doc;
+                        populateArticle();
+                        populateList();
+                        mAdapter.notifyDataSetChanged();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }).execute(mBaseUrl);
+            }
+        });
 	}
+
+    private void populateArticle()
+    {
+        Element content = document.select("#content").first();
+        // Set the thread title
+        Element title = content.select("div.thread-header-title").first();
+        Element author = content.select("div#article-meta").first();
+        Element body = content.select("div#article-body").first();
+        Element frags = document.select("span#thread-frag-count").first();
+        Element forum = document.select("div.thread-header-desc").first();
+
+        ThreadComment article = new ThreadComment(title.text(), frags.text(), author.text() + forum.text(), body.html(), null, null, mBaseUrl);
+
+        if(listItems == null)
+            listItems = new ArrayList<>();
+
+        listItems.add(article);
+    }
 
 	// TODO find a way to use ThreadViewFragment initializeList for the comments section
 	@Override
@@ -94,7 +128,7 @@ public class ArticleViewFragment extends PageViewFragment
 			Element frags = curComment.select("span.post-frag-count").first();
 
 			//public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)
-			ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(),body.html(), footer.text(), postNumber.text(), mUrl+postNumber.text());
+			ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(),body.html(), footer.text(), postNumber.text(), mBaseUrl+postNumber.text());
 			listItems.add(tc);
 		}
 	}
