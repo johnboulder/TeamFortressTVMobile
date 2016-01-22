@@ -22,6 +22,11 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
         mUrl = url;
     }
 
+    public void resetItemCount()
+    {
+        previousLastItem = 0;
+    }
+
     public void setUrl(String url)
     {
         mUrl = url;

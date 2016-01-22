@@ -51,9 +51,37 @@ public class ThreadListViewFragment extends PageViewFragment
         return fragment;
     }
 
+    private String getUrl()
+    {
+        return mUrl;
+    }
+
     // TODO: refactor, View v param is unnecessary
     @Override
     protected void initializeList(View v){
+        RadioGroup rg = (RadioGroup) getView().findViewById(R.id.radio_group_sort);
+        for (int j = 0; j < rg.getChildCount(); j++)
+        {
+            final ToggleButton view = (ToggleButton) rg.getChildAt(j);
+            if(view.isChecked())
+            {
+                switch(j)
+                {
+                    case 0:
+                        mUrl = mUrl+"/?sort=hot";
+                        break;
+                    case 1:
+                        mUrl = mUrl+"/?sort=active";
+                        break;
+                    case 2:
+                        mUrl = mUrl+"/?sort=new";
+                        break;
+                    case 3:
+                        mUrl = mUrl+"/?sort=top";
+                        break;
+                }
+            }
+        }
         final ListView lv = (ListView) v.findViewById(R.id.thread_list);
 
         // Fill the thread list with threads
@@ -98,7 +126,7 @@ public class ThreadListViewFragment extends PageViewFragment
         // Setup the scroll listener which updates the contents of the listView whenever the last
         // item in the list becomes visible
         // NOTE: This changes the value of document.
-        lv.setOnScrollListener(new LoadListItemOnScrollListener(
+        mOnScrollListener = new LoadListItemOnScrollListener(
                 new RefreshFragmentListCallback()
                 {
                     @Override
@@ -110,7 +138,8 @@ public class ThreadListViewFragment extends PageViewFragment
                     }
                 },
                 mUrl
-        ));
+        );
+        lv.setOnScrollListener(mOnScrollListener);
 
         //TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
         mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
@@ -137,12 +166,10 @@ public class ThreadListViewFragment extends PageViewFragment
             }
         });
 
-        RadioGroup rg = (RadioGroup) getView().findViewById(R.id.radio_group_sort);
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
 
-                String url = mBaseUrl;
                 for (int j = 0; j < radioGroup.getChildCount(); j++)
                 {
                     final ToggleButton view = (ToggleButton) radioGroup.getChildAt(j);
@@ -151,19 +178,18 @@ public class ThreadListViewFragment extends PageViewFragment
                 switch(i)
                 {
                     case R.id.button_sort_active:
-                        url = mBaseUrl+"/?sort=active";
+                        mUrl = mBaseUrl+"/?sort=active";
                         break;
                     case R.id.button_sort_hot:
-                        url = mBaseUrl+"/?sort=hot";
+                        mUrl = mBaseUrl+"/?sort=hot";
                         break;
                     case R.id.button_sort_new:
-                        url = mBaseUrl+"/?sort=new";
+                        mUrl = mBaseUrl+"/?sort=new";
                         break;
                     case R.id.button_sort_top:
-                        url = mBaseUrl+"/?sort=top";
+                        mUrl = mBaseUrl+"/?sort=top";
                         break;
                 }
-
                 new GetNewPageDataTask(new RefreshFragmentListCallback()
                 {
                     // TODO refactor so only the changed portions of each listItem are changed
@@ -171,13 +197,30 @@ public class ThreadListViewFragment extends PageViewFragment
                     public void refreshList(Document doc)
                     {
                         listItems.clear();
+                        listItems.add(new ForumThread("Loading", "Loading", "Loading", "Loading", "Loading", "Loading", "Loading"));
                         mAdapter.notifyDataSetChanged();
+                        listItems.clear();
+                        mOnScrollListener.resetItemCount();
+                        mOnScrollListener = new LoadListItemOnScrollListener(
+                                new RefreshFragmentListCallback()
+                                {
+                                    @Override
+                                    public void refreshList(Document doc)
+                                    {
+                                        document = doc;
+                                        populateList();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                },
+                                mUrl
+                        );
+                        lv.setOnScrollListener(mOnScrollListener);
+                        mOnScrollListener.resetItemCount();
                         document = doc;
                         populateList();
                         mAdapter.notifyDataSetChanged();
-                        mSwipeRefreshLayout.setRefreshing(false);
                     }
-                }).execute(url);
+                }).execute(mUrl);
             }
         });
     }

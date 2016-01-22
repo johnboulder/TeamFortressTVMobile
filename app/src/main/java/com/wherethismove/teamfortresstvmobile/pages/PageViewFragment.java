@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -26,6 +28,7 @@ public abstract class PageViewFragment extends Fragment
     protected String mBaseUrl;
     protected int mLayout;
     protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected LoadListItemOnScrollListener mOnScrollListener;
     // TODO make a parent object for ThreadComment, ForumThread, and Forum to use here in listItems
     // This way initialization of listItems can be done here
     //protected ArrayList<Object> listItems;
@@ -36,7 +39,7 @@ public abstract class PageViewFragment extends Fragment
         if (getArguments() != null) {
 
             mBaseUrl = getArguments().getString(ARG_URL);
-            mUrl = mBaseUrl+"/?page=1";
+            mUrl = mBaseUrl;
             mLayout = getArguments().getInt(ARG_LAYOUT);
         }
     }
