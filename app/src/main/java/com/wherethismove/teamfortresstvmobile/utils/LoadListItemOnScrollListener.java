@@ -22,6 +22,11 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
         mUrl = url;
     }
 
+    public void setUrl(String url)
+    {
+        mUrl = url;
+    }
+
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState)
     {
@@ -48,7 +53,7 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
                             // Ensures totalItemCount is a rounded off number, like 30, 60, 90, etc.
                             mPage = ((totalItemCount+(30-totalItemCount%30))/30)+1;
                         }
-                        new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"/?page="+mPage.toString());
+                        new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"&page="+mPage.toString());
                     }
                 }
                 break;
