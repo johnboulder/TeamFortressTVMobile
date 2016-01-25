@@ -46,7 +46,7 @@ public class ArticleAdapter extends CommentAdapter
             vi = inflater.inflate(R.layout.list_item_comment, null);
 
             ThreadComment current = mData.get(position);
-            TextView posts = (TextView) vi.findViewById(R.id.comment_header);
+            TextView posts = (TextView) vi.findViewById(R.id.comment_header_text);
 
             posts.setText(current.getHeaderText());
 

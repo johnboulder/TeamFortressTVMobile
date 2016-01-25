@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.wherethismove.teamfortresstvmobile.R;
@@ -74,7 +75,7 @@ public class ThreadAdapter extends BaseAdapter
         TextView post_time = (TextView) vi.findViewById(R.id.post_time);
         post_time.setText(current.getSubmissionTime());
 
-        Button viewThread = (Button) vi.findViewById(R.id.b_view_thread);
+        ImageButton viewThread = (ImageButton) vi.findViewById(R.id.b_view_thread);
         viewThread.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v)

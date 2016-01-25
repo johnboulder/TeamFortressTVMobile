@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.ToggleButton;
@@ -101,7 +102,7 @@ public class ThreadListViewFragment extends PageViewFragment
 
                 // ListView Clicked item value
                 final ForumThread  itemValue = (ForumThread) lv.getItemAtPosition(position);
-                Button b = (Button) v.findViewById(R.id.b_view_thread);
+                ImageButton b = (ImageButton) v.findViewById(R.id.b_view_thread);
 
                 /* When a list item is clicked, initialize the click listener for the button*/
                 b.setOnClickListener(new View.OnClickListener(){

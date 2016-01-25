@@ -37,7 +37,8 @@
 
         android:ellipsize="none"
         android:maxLines="4"
-        android:scrollHorizontally="false"/>
+        android:scrollHorizontally="false"
+        android:textColor="#FF0C6D97"/>
 
     <TextView
         android:id="@+id/last_activity"

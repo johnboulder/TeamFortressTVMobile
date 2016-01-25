@@ -7,10 +7,9 @@
         android:id="@+id/thread_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TEST"
 
         android:textStyle="bold"
-        android:textColor="#000"
+        android:textColor="#FF0C6D97"
         android:textSize="30dp"/>
 
 </LinearLayout>

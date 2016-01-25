@@ -70,7 +70,7 @@ public class CommentAdapter extends BaseAdapter
 
             ThreadComment current = mData.get(position);
 
-            TextView posts = (TextView) vi.findViewById(R.id.comment_header);
+            TextView posts = (TextView) vi.findViewById(R.id.comment_header_text);
             posts.setText(current.getHeaderText());
 
             TextView frags = (TextView) vi.findViewById(R.id.comment_frag_count);

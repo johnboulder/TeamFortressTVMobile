@@ -3,37 +3,45 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <!--public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)-->
-    <View
-        android:id="@+id/splitter_top"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
+   <RelativeLayout
+       android:id="@+id/comment_header"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
 
-        android:layout_alignParentTop="true"
-        android:background="#000"/>
+       android:background="@color/secondary_text_disabled_material_light">
+       <View
+           android:id="@+id/splitter_top"
+           android:layout_width="match_parent"
+           android:layout_height="2dp"
 
-    <TextView
-        android:id="@+id/comment_header"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+           android:layout_alignParentTop="true"
+           android:background="@color/secondary_text_default_material_light"/>
 
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/splitter_top"/>
+       <TextView
+           android:id="@+id/comment_header_text"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
 
-    <TextView
-        android:id="@+id/comment_frag_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/splitter_top" />
 
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/splitter_top"/>
+       <TextView
+           android:id="@+id/comment_frag_count"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
 
-    <View
-        android:id="@+id/splitter_header"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
+           android:layout_alignParentRight="true"
+           android:layout_below="@+id/splitter_top"
+           android:textColor="@android:color/holo_red_light"/>
 
-        android:layout_below="@+id/comment_header"
-        android:background="#000"/>
+       <View
+           android:id="@+id/splitter_header"
+           android:layout_width="match_parent"
+           android:layout_height="2dp"
+
+           android:layout_below="@+id/comment_header_text"
+           android:background="@color/secondary_text_default_material_light"/>
+   </RelativeLayout>
 
     <TextView
         android:id="@+id/comment_forum"
@@ -47,7 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/splitter_header"/>
+        android:layout_below="@+id/comment_header"
+        android:textColor="@android:color/black"/>
 
     <TextView
         android:id="@+id/comment_footer"

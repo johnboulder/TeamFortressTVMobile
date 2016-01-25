@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+
+		// TODO used to possibly ensure that fragments do not overlay eachother
+		FrameLayout container = (FrameLayout) findViewById(R.id.fragment_container);
+		container.removeAllViews();
 
 //		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //		fab.setOnClickListener(new View.OnClickListener()
