@@ -21,9 +21,9 @@ public class ForumThread
     {
         mNumberResponses = "Posts: "+responses;
         mNumberPages = "Pages: "+pages;
-        mOriginalPoster = "Posted by: "+op;
+        mOriginalPoster = op;
         mThreadTitle = title;
-        mThreadSubmissionTime = "Posted: "+postTime;
+        mThreadSubmissionTime = postTime;
         mUpvotes = frags;
         //TODO check for malformed url
         mUrl = url;

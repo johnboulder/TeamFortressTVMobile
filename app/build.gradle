@@ -8,8 +8,14 @@ android {
         applicationId "com.wherethismove.teamfortresstvmobile"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+
+        /*Given a version number MAJOR.MINOR.PATCH, increment the:
+        * MAJOR version when you make incompatible API changes,
+        * MINOR version when you add functionality in a backwards-compatible manner, and
+        * PATCH version when you make backwards-compatible bug fixes.
+        */
+        versionName "1.0.1"
     }
     buildTypes {
         release {

@@ -16,8 +16,10 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="AppTheme.Threads">
-
     </style>
 
+    <style name="AppTheme.QuoteText">
+        <item name="android:textSize">12sp</item>
+    </style>
 
 </resources>

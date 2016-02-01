@@ -1,5 +1,9 @@
 package com.wherethismove.teamfortresstvmobile.pages.comments;
 
+import org.jsoup.nodes.Element;
+
+import java.util.ArrayList;
+
 /**
  * Created by stockweezie on 12/29/2015.
  */
@@ -12,14 +16,23 @@ public class ThreadComment
     private String mFooter;
     private String mPostNumber;
     private String mUrl;
-
+    private Element mBodyElement;
 
     public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)
     {
+        //mBodyElement = bodyElement;
+
         mHeaderText = header;
         mFrags = frags;
         mForum = forum;
+
+        // Added for workaround related to html parsing see links:
+        // http://stackoverflow.com/questions/23568481/weird-taghandler-behavior-detecting-opening-and-closing-tags/25836810#25836810
+        // http://stackoverflow.com/questions/34692666/android-custom-quotespan-issue
+        if(body != null)
+            body.replace("<q>", "&zwj;<q>");
         mBody = body;
+
         mFooter = footer;
         mPostNumber = postNumber;
 
@@ -62,4 +75,10 @@ public class ThreadComment
     {
         return mUrl+"#"+mPostNumber;
     }
+
+    public Element getBodyElement()
+    {
+        return mBodyElement;
+    }
+
 }

@@ -141,11 +141,21 @@ public class ThreadViewFragment extends PageViewFragment {
             Element header = curComment.select("a.post-author").first();
             // Get the body
             Element body = curComment.select("div.post-body").first();
+
+            // Set the spoiler tags so they can be retrieved by HtmlTagHandler
+            Elements spoilers = body.select("div.spoiler-content");
+            spoilers.tagName("spoiler");
+            // Remove all the spoilerbuttons so their text doesn't appear in things
+            Elements spoilerButtons = body.select("span.btn.spoiler.js-spoiler");
+            spoilerButtons.remove();
+
             // Get the footer
             Element footer = curComment.select("div.post-footer").first();
+            String footer_s = footer.text();
+            // Split the footer text to remove the "quote" link and everything after it
+            footer_s = footer_s.split("quote")[0];
 
-            //public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)
-            ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(),body.html(), footer.text(), postNumber.text(), mBaseUrl+postNumber.text());
+            ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(), body.html(), footer_s , postNumber.text(), mBaseUrl+postNumber.text());
             listItems.add(tc);
         }
     }
@@ -179,7 +189,6 @@ public class ThreadViewFragment extends PageViewFragment {
             // Get the footer
             Element footer = curComment.select("div.post-footer").first();
 
-            //public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)
             ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(),body.html(), footer.text(), postNumber.text(), mBaseUrl+postNumber.text());
             listItems.add(tc);
         }

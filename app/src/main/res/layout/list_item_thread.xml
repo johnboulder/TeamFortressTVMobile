@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+
             android:visibility="gone"/>
 
         <View
@@ -75,13 +76,12 @@
     <ImageButton
         android:id="@+id/b_view_thread"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
 
-        android:src="@drawable/ic_arrow_right_drop_circle_outline_grey600_48dp"
+        android:src="@drawable/ic_arrow_right_grey600_48dp"
         android:background="@drawable/thread_button"
-        android:focusable="false"
-        android:visibility="gone"/>
+        android:focusable="false" />
 
 </RelativeLayout>

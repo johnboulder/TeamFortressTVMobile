@@ -1,7 +1,13 @@
 package com.wherethismove.teamfortresstvmobile.pages.comments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.QuoteSpan;
+import android.text.style.StyleSpan;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +16,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.wherethismove.teamfortresstvmobile.R;
+import com.wherethismove.teamfortresstvmobile.utils.HtmlTagHandler;
+
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
@@ -63,6 +73,7 @@ public class CommentAdapter extends BaseAdapter
 
         View vi = convertView;
 
+        // Create a comment list item
         if(viewType == 1)
         {
             //ListView recycles views and will pass the wrong vi...
@@ -76,13 +87,17 @@ public class CommentAdapter extends BaseAdapter
             TextView frags = (TextView) vi.findViewById(R.id.comment_frag_count);
             frags.setText(current.getFragCount());
 
+            // BODY
             TextView body = (TextView) vi.findViewById(R.id.comment_body);
-            body.setText(Html.fromHtml(current.getBody()));
+            // TODO Replace any spoiler text spans with <spoiler></spoiler> tags
+            body.setText(Html.fromHtml(current.getBody(), null, new HtmlTagHandler(mContext)));
             body.setAutoLinkMask(Linkify.WEB_URLS);
+            // BODY END
 
             TextView footer = (TextView) vi.findViewById(R.id.comment_footer);
             footer.setText(current.getFooter());
         }
+        // Create the title list item
         else
         {
             //ListView recycles views and will pass the wrong vi...
@@ -94,4 +109,5 @@ public class CommentAdapter extends BaseAdapter
         }
         return vi;
     }
+
 }

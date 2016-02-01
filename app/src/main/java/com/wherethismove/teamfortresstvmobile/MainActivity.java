@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
+import com.wherethismove.teamfortresstvmobile.pages.AboutPageFragment;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.articles.ArticleViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.comments.ThreadViewFragment;
@@ -36,16 +37,14 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 
-/**
- * TODO add functionality for updating the current fragment's data
- */
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener,
         HomePageFragment.OnFragmentInteractionListener,
         ForumTabFragment.OnTabForumSelectedListener,
         ThreadListViewFragment.OnThreadSelectedListener,
 		//ForumsViewFragment.OnForumSelectedListener,
-		ThreadViewFragment.commentFiller
+		ThreadViewFragment.commentFiller,
+		AboutPageFragment.OnFragmentInteractionListener
 {
 	Document document;
     public static String siteRoot = "http://www.teamfortress.tv";
@@ -267,10 +266,10 @@ public class MainActivity extends AppCompatActivity
 		int id = item.getItemId();
 
 		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings)
-		{
-			return true;
-		}
+//		if (id == R.id.action_settings)
+//		{
+//			return true;
+//		}
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -306,7 +305,7 @@ public class MainActivity extends AppCompatActivity
             threads.setArguments(args);
 
 			FragmentManager fm = getSupportFragmentManager();
-			fm.beginTransaction().replace(R.id.fragment_container,threads, null).addToBackStack(null).commit();
+			fm.beginTransaction().replace(R.id.fragment_container,threads, "Threads").addToBackStack(null).commit();
 		}
 		else if (id == R.id.nav_forums)
 		{
@@ -340,6 +339,13 @@ public class MainActivity extends AppCompatActivity
 		else if (id == R.id.nav_about)
 		{
 			// Open a page with contact info
+			setTitle("About");
+			Bundle args = new Bundle();
+			AboutPageFragment about = new AboutPageFragment();
+			about.setArguments(args);
+
+			FragmentManager fm = getSupportFragmentManager();
+			fm.beginTransaction().replace(R.id.fragment_container,about, null).addToBackStack(null).commit();
 		}
 
 		DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -356,7 +362,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void openThread(String url)
     {
-		//setTitle(f.getTitle());
+		String[] title = url.split("/");
+		setTitle(title[4]);
         Bundle args = new Bundle();
         args.putString("url", url);
         args.putInt(PageViewFragment.ARG_LAYOUT, R.layout.fragment_thread_view);
@@ -390,6 +397,6 @@ public class MainActivity extends AppCompatActivity
 		threads.setArguments(args);
 
 		FragmentManager fm = getSupportFragmentManager();
-		fm.beginTransaction().replace(R.id.fragment_container,threads, null).addToBackStack(null).commit();
+		fm.beginTransaction().replace(R.id.fragment_container,threads, f.getTitle()).addToBackStack(null).commit();
 	}
 }

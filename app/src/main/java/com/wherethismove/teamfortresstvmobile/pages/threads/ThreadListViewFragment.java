@@ -38,6 +38,7 @@ public class ThreadListViewFragment extends PageViewFragment
     protected ArrayList<ForumThread> listItems;
     private ThreadAdapter mAdapter;
     private OnThreadSelectedListener mListener;
+    private String mTitle;
 
     public ThreadListViewFragment() {
         // Required empty public constructor
@@ -88,41 +89,9 @@ public class ThreadListViewFragment extends PageViewFragment
         // Fill the thread list with threads
         populateList();
 
-        mAdapter = new ThreadAdapter(v.getContext(), listItems);
+        // Pass a
+        mAdapter = new ThreadAdapter(v.getContext(), mListener, listItems);
         lv.setAdapter(mAdapter);
-
-        // Setup the onClickListener for the list so that when an item is clicked
-        // the visibility of various sub views are toggled
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            // Show extended information for the thread
-            // Set a number of different items in the view from "gone" to "visible"
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-                // ListView Clicked item value
-                final ForumThread  itemValue = (ForumThread) lv.getItemAtPosition(position);
-                ImageButton b = (ImageButton) v.findViewById(R.id.b_view_thread);
-
-                /* When a list item is clicked, initialize the click listener for the button*/
-                b.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v)
-                    {
-                        onThreadSelected(itemValue.getThreadUrl());
-                    }
-                });
-
-                //Toggle the button's visibility
-                int visibility = b.getVisibility();
-
-                if(visibility == Button.GONE)
-                    b.setVisibility(Button.VISIBLE);
-                else
-                    b.setVisibility(Button.GONE);
-            }
-
-        });
 
         // Setup the scroll listener which updates the contents of the listView whenever the last
         // item in the list becomes visible
@@ -141,6 +110,28 @@ public class ThreadListViewFragment extends PageViewFragment
                 mUrl
         );
         lv.setOnScrollListener(mOnScrollListener);
+
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//        {
+//
+//            // Show extended information for the thread
+//            // Set a number of different items in the view from "gone" to "visible"
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+//
+//                // ListView Clicked item value
+//
+//
+//                //Toggle the button's visibility
+//                int visibility = b.getVisibility();
+//
+//                if(visibility == Button.GONE)
+//                    b.setVisibility(Button.VISIBLE);
+//                else
+//                    b.setVisibility(Button.GONE);
+//            }
+//
+//        });
 
         //TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
         mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
@@ -224,6 +215,11 @@ public class ThreadListViewFragment extends PageViewFragment
                 }).execute(mUrl);
             }
         });
+
+        mTitle = document.select("#content > div:nth-child(4) > div > div:nth-child(2)").text();
+        if(mTitle == "")
+            mTitle = "Threads";
+        getActivity().setTitle(mTitle);
     }
 
     @Override
@@ -268,6 +264,13 @@ public class ThreadListViewFragment extends PageViewFragment
         if (mListener != null) {
             mListener.openThread(url);
         }
+    }
+
+    @Override
+    public void onResume ()
+    {
+        super.onResume();
+        getActivity().setTitle(mTitle);
     }
 
     @Override

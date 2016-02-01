@@ -21,12 +21,14 @@ import java.util.ArrayList;
 public class ThreadAdapter extends BaseAdapter
 {
     private Context mContext;
+    private ThreadListViewFragment.OnThreadSelectedListener mButtonCallback;
     private ArrayList<ForumThread> mData;
     private static LayoutInflater inflater = null;
 
-    public ThreadAdapter(Context context, ArrayList<ForumThread> data)
+    public ThreadAdapter(Context context, ThreadListViewFragment.OnThreadSelectedListener buttonCallback, ArrayList<ForumThread> data)
     {
         this.mContext = context;
+        this.mButtonCallback = buttonCallback;
         this.mData = data;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -52,11 +54,10 @@ public class ThreadAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-//        View vi = convertView;
-//        if (vi == null)
+
         View vi = inflater.inflate(R.layout.list_item_thread, null);
 
-        ForumThread current = mData.get(position);
+        final ForumThread current = mData.get(position);
         TextView posts = (TextView) vi.findViewById(R.id.posts);
         posts.setText(current.getNumberOfPosts());
 
@@ -80,6 +81,7 @@ public class ThreadAdapter extends BaseAdapter
             @Override
             public void onClick(View v)
             {
+                mButtonCallback.openThread(current.getThreadUrl());
             }
         });
 

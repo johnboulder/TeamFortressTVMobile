@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/comment_background"
+    android:padding="1dp"
 
-    <!--public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)-->
+    android:descendantFocusability="blocksDescendants">
+
+    <!-- COMMENT HEADER -->
    <RelativeLayout
        android:id="@+id/comment_header"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
 
-       android:background="@color/secondary_text_disabled_material_light">
+       android:background="@color/comment_header_background_color_light">
        <View
            android:id="@+id/splitter_top"
            android:layout_width="match_parent"
-           android:layout_height="2dp"
+           android:layout_height="1dp"
 
            android:layout_alignParentTop="true"
-           android:background="@color/secondary_text_default_material_light"/>
+           android:background="@color/comment_header_outline_color_light"/>
 
        <TextView
            android:id="@+id/comment_header_text"
            android:layout_width="wrap_content"
            android:layout_height="match_parent"
 
+           android:textColor="@android:color/black"
            android:layout_alignParentLeft="true"
-           android:layout_below="@+id/splitter_top" />
+           android:layout_below="@+id/splitter_top"
+           android:paddingLeft="5dp"/>
 
        <TextView
            android:id="@+id/comment_frag_count"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
+
+           android:paddingRight="5dp"
 
            android:layout_alignParentRight="true"
            android:layout_below="@+id/splitter_top"
@@ -37,32 +46,47 @@
        <View
            android:id="@+id/splitter_header"
            android:layout_width="match_parent"
-           android:layout_height="2dp"
+           android:layout_height="1dp"
 
            android:layout_below="@+id/comment_header_text"
-           android:background="@color/secondary_text_default_material_light"/>
+           android:background="@color/comment_header_outline_color_light"/>
    </RelativeLayout>
+    <!-- COMMENT HEADER END-->
 
-    <TextView
-        android:id="@+id/comment_forum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:visibility="gone"/>
-
+    <!-- COMMENT BODY -->
     <TextView
         android:id="@+id/comment_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:autoLink="web"
 
         android:layout_below="@+id/comment_header"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:focusable="true"
 
+        android:padding="5dp"/>
+    <!-- COMMENT BODY END-->
+
+    <View
+        android:id="@+id/splitter_footer"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+
+        android:layout_below="@+id/comment_body"
+        android:background="@color/comment_header_outline_color_light"/>
+
+    <!-- COMMENT FOOTER -->
     <TextView
         android:id="@+id/comment_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/comment_body"/>
+        android:layout_below="@+id/splitter_footer"
+        android:padding="5dp"/>
+    <!-- COMMENT FOOTER END-->
 
 </RelativeLayout>

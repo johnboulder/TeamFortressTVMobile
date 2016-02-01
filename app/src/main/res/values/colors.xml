@@ -4,4 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="background_material_light">#f5f5f5</color>
+
+    <color name="comment_header_background_color_light">#FFAFAFAF</color>
+    <color name="comment_header_outline_color_light">#FFACACAC</color>
+    <color name="comment_background_color_light">#FFF5F5F5</color>
+
+    <color name="quote_background_color_light">#FFC7C7C7</color>
+    <color name="quote_stripe_color_light">#FF515151</color>
 </resources>
