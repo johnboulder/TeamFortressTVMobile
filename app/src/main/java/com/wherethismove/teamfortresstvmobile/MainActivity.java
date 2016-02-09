@@ -30,6 +30,8 @@ import com.wherethismove.teamfortresstvmobile.pages.forums.ForumTabFragment;
 import com.wherethismove.teamfortresstvmobile.pages.forums.ForumsViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.HomePageFragment;
 import com.wherethismove.teamfortresstvmobile.pages.threads.ThreadListViewFragment;
+import com.wherethismove.teamfortresstvmobile.utils.GetNewPageDataTask;
+import com.wherethismove.teamfortresstvmobile.utils.GetPageDataTask;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -42,13 +44,11 @@ public class MainActivity extends AppCompatActivity
         HomePageFragment.OnFragmentInteractionListener,
         ForumTabFragment.OnTabForumSelectedListener,
         ThreadListViewFragment.OnThreadSelectedListener,
-		//ForumsViewFragment.OnForumSelectedListener,
 		ThreadViewFragment.commentFiller,
 		AboutPageFragment.OnFragmentInteractionListener
 {
 	Document document;
     public static String siteRoot = "http://www.teamfortress.tv";
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     private final String FORUMS = "/forums";
     private final String THREADS = "/threads";
     private final String SCHEDULE = "/schedule";
@@ -141,31 +141,21 @@ public class MainActivity extends AppCompatActivity
 		//home.setArguments(getIntent().getExtras());
 		fm.beginTransaction().add(R.id.fragment_container, home, "home_page_fragment").commit();
 
-		class MyTask extends AsyncTask<Void, Void, Document>
+		new GetPageDataTask(new PageViewFragment.GetDocumentCallback()
 		{
 			@Override
-			protected Document doInBackground(Void... params)
+			public void refreshList(Document document)
 			{
-				try
-				{
-					String url = siteRoot;
-					document = Jsoup.connect(url).get();
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
-					return null;
-				}
-
-				return document;
+				/**/
 			}
 
 			@Override
-			protected void onPostExecute(Document result)
+			public void callback(View view, Document result)
 			{
+				document = result;
 			}
-		}
-		new MyTask().execute();
+		}, v).execute(siteRoot);
+
 	}
 
 	public void onToggle(View view) {

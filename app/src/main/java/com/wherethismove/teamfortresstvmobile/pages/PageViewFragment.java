@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wherethismove.teamfortresstvmobile.utils.GetPageDataTask;
 import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
 
 import org.jsoup.Jsoup;
@@ -23,6 +24,7 @@ public abstract class PageViewFragment extends Fragment
 {
     public static final String ARG_URL = "url";
     public static final String ARG_LAYOUT = "layout";
+    public GetDocumentCallback mCallback;
     protected Document document;
     protected String mUrl;
     protected String mBaseUrl;
@@ -45,36 +47,36 @@ public abstract class PageViewFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        // Inflate the layout for this fragment
         View v = inflater.inflate(mLayout, container, false);
         final View v2 = v;
-        // Inflate the layout for this fragment
-        class MyTask extends AsyncTask<Void, Void, Document>
-        {
-            @Override
-            protected Document doInBackground(Void... params)
-            {
-                try
-                {
-                    document = Jsoup.connect(mUrl).get();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                    return null;
-                }
 
-                return document;
-            }
+        // Needs to return a document
+        // Needs to received a url
+        // Needs to recieve and pass a view to initializeList
+        GetPageDataTask task = new GetPageDataTask(
+                new GetDocumentCallback()
+                {
+                    @Override
+                    public void refreshList(Document document)
+                    {
+                                    /* Unimplemented intentionally. Maybe don't extend RefreshFragmentListCallback
+                                     * in GetDocumentCallback
+                                     */
+                    }
 
-            @Override
-            protected void onPostExecute(Document result)
-            {
-                initializeList(v2);
-            }
-        }
-        new MyTask().execute();
+                    @Override
+                    public void callback(View view, Document result)
+                    {
+                        document = result;
+                        initializeList(view);
+                    }
+                },
+                v2);
+        task.execute(mUrl);
+
         return v;
     }
 
@@ -85,7 +87,13 @@ public abstract class PageViewFragment extends Fragment
     // Called from listeners when list_items are added to the list
     abstract protected void populateList();
 
-    public interface RefreshFragmentListCallback {
+    public interface RefreshFragmentListCallback
+    {
         void refreshList(Document document);
+    }
+
+    public interface GetDocumentCallback extends RefreshFragmentListCallback
+    {
+         void callback(View view, Document result);
     }
 }

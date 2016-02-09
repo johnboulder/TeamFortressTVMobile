@@ -113,8 +113,6 @@ public class ThreadViewFragment extends PageViewFragment {
                 }).execute(mBaseUrl+"/?page="+page.toString());
             }
         });
-
-
     }
 
     @Override
@@ -158,43 +156,6 @@ public class ThreadViewFragment extends PageViewFragment {
             ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(), body.html(), footer_s , postNumber.text(), mBaseUrl+postNumber.text());
             listItems.add(tc);
         }
-    }
-
-    // TODO merge this with populateList()
-    protected void updatePageList()
-    {
-        // add comments to listItems from listItems.size() to the end of comments
-        Element forum = document.select("div.thread-header-desc").first();
-        Elements comments = document.select("div.post");
-
-        // Calculate the page we're on
-        int page = (listItems.size()/30)+1;
-        // Calculate the first comment we need grab
-        int start = (listItems.size())%30;
-        for(int i = start; i<comments.size(); i++)
-        {
-            Element curComment = comments.get(i);
-            Element frags;
-            if(curComment.className().equals("post self"))
-                frags = document.select("span#thread-frag-count").first();
-            else
-                frags = curComment.select("span.post-frag-count").first();
-
-            // Get the post number. Alternate selector "a.post-anchor"
-            Element postNumber = curComment.select("div.post-num").first();
-            // Get the header
-            Element header = curComment.select("a.post-author").first();
-            // Get the body
-            Element body = curComment.select("div.post-body").first();
-            // Get the footer
-            Element footer = curComment.select("div.post-footer").first();
-
-            ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(),body.html(), footer.text(), postNumber.text(), mBaseUrl+postNumber.text());
-            listItems.add(tc);
-        }
-
-        mAdapter.notifyDataSetChanged();
-        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public void populateComments(String s) {

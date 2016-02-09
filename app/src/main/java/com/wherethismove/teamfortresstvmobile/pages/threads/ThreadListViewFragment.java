@@ -96,6 +96,10 @@ public class ThreadListViewFragment extends PageViewFragment
         // Setup the scroll listener which updates the contents of the listView whenever the last
         // item in the list becomes visible
         // NOTE: This changes the value of document.
+        // TODO get rid of calculations that occur in LoadListItemOnScrollListener
+        // TODO set this up so that a callback is passed to LoadListItemOnScrollListener
+        // and any calculations are done within the callback. Make it so the callback can be used
+        // here or setOnRefreshListener. Consider making a URL object
         mOnScrollListener = new LoadListItemOnScrollListener(
                 new RefreshFragmentListCallback()
                 {

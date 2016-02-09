@@ -44,6 +44,12 @@ public class GetNewPageDataTask extends AsyncTask<String, Void, Document>{
     }
 
     @Override
+    protected void onProgressUpdate(Void... values)
+    {
+
+    }
+
+    @Override
     protected void onPostExecute(Document result) {
         mFragmentCallback.refreshList(result);
     }

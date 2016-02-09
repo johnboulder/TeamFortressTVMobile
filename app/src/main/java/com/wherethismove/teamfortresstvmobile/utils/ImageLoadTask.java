@@ -101,6 +101,7 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap>
 		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 		imageView.setAdjustViewBounds(true);
 		ViewGroup.LayoutParams params = imageView.getLayoutParams();
+		/*TODO these settings need to be less specific to the home page*/
         if (mViewHeight>0 && mViewWidth>0)
         {
             imageView.setMaxWidth(mViewWidth);
