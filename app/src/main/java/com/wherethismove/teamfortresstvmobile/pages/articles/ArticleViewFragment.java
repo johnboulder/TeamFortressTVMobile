@@ -18,6 +18,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 
 // TODO make this class a child of ThreadViewFragment
+// TODO make enable users to open links to pages
 public class ArticleViewFragment extends PageViewFragment
 {
 	private ArrayList<ThreadComment> listItems;

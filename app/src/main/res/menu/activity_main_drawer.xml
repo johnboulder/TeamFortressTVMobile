@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single"
+        android:theme="@style/Theme.AppCompat.NoActionBar">
+
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_white_48dp"
-            android:title="Home"
+            android:title="@string/navigation_home"
             android:checked="true"/>
         <item
             android:id="@+id/nav_threads"
             android:icon="@drawable/ic_message_text_white_48dp"
-            android:title="Threads"/>
+            android:title="@string/navigation_threads"/>
         <item
             android:id="@+id/nav_forums"
             android:icon="@drawable/ic_message_white_48dp"
-            android:title="Forums"/>
+            android:title="@string/navigation_forums"/>
         <!--<item-->
             <!--android:id="@+id/nav_schedule"-->
             <!--android:icon="@android:drawable/ic_menu_help"-->
@@ -34,6 +37,6 @@
         <item
             android:id="@+id/nav_about"
             android:icon="@android:drawable/ic_dialog_info"
-            android:title="About"/>
+            android:title="@string/navigation_about"/>
     </group>
 </menu>
