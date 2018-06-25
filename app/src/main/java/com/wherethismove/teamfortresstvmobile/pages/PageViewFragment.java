@@ -1,6 +1,5 @@
 package com.wherethismove.teamfortresstvmobile.pages;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,26 +10,27 @@ import android.view.ViewGroup;
 import com.wherethismove.teamfortresstvmobile.utils.GetPageDataTask;
 import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
+import java.net.URL;
 
 /**
  * A Fragment intended to be used as a base class for the various fragments which will be
  * implemented in this project
  */
-public abstract class PageViewFragment extends Fragment
-{
+public abstract class PageViewFragment extends Fragment {
     public static final String ARG_URL = "url";
+    public static final String ARG_URL_OBJECT = "url_object";
     public static final String ARG_LAYOUT = "layout";
-    public GetDocumentCallback mCallback;
+    public GetDocumentCallback callback;
     protected Document document;
-    protected String mUrl;
-    protected String mBaseUrl;
+    protected URL _url;
+    protected String url;
+    protected String urlUnchanging;
     protected int mLayout;
-    protected SwipeRefreshLayout mSwipeRefreshLayout;
-    protected LoadListItemOnScrollListener mOnScrollListener;
+    protected SwipeRefreshLayout swipeRefreshLayout;
+    protected LoadListItemOnScrollListener onScrollListener;
+
     // TODO make a parent object for ThreadComment, ForumThread, and Forum to use here in listItems
     // This way initialization of listItems can be done here
     //protected ArrayList<Object> listItems;
@@ -39,16 +39,16 @@ public abstract class PageViewFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            _url = (URL) getArguments().get(ARG_URL_OBJECT);
 
-            mBaseUrl = getArguments().getString(ARG_URL);
-            mUrl = mBaseUrl;
+            urlUnchanging = getArguments().getString(ARG_URL);
+            url = urlUnchanging;
             mLayout = getArguments().getInt(ARG_LAYOUT);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(mLayout, container, false);
         final View v2 = v;
@@ -57,25 +57,22 @@ public abstract class PageViewFragment extends Fragment
         // Needs to received a url
         // Needs to recieve and pass a view to initializeList
         GetPageDataTask task = new GetPageDataTask(
-                new GetDocumentCallback()
-                {
+                new GetDocumentCallback() {
                     @Override
-                    public void refreshList(Document document)
-                    {
-                                    /* Unimplemented intentionally. Maybe don't extend RefreshFragmentListCallback
-                                     * in GetDocumentCallback
-                                     */
+                    public void refreshList(Document document) {
+                        /* Unimplemented intentionally. Maybe don't extend RefreshFragmentListCallback
+                         * in GetDocumentCallback
+                         */
                     }
 
                     @Override
-                    public void callback(View view, Document result)
-                    {
+                    public void callback(View view, Document result) {
                         document = result;
                         initializeList(view);
                     }
                 },
                 v2);
-        task.execute(mUrl);
+        task.execute(url);
 
         return v;
     }
@@ -87,13 +84,11 @@ public abstract class PageViewFragment extends Fragment
     // Called from listeners when list_items are added to the list
     abstract protected void populateList();
 
-    public interface RefreshFragmentListCallback
-    {
+    public interface RefreshFragmentListCallback {
         void refreshList(Document document);
     }
 
-    public interface GetDocumentCallback extends RefreshFragmentListCallback
-    {
-         void callback(View view, Document result);
+    public interface GetDocumentCallback extends RefreshFragmentListCallback {
+        void callback(View view, Document result);
     }
 }

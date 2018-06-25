@@ -58,12 +58,12 @@ public class ArticleViewFragment extends PageViewFragment
 						mAdapter.notifyDataSetChanged();
 					}
 				},
-				mBaseUrl
+				urlUnchanging
 		));
 
         //TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
-        mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 
             @Override
             public void onRefresh()
@@ -81,9 +81,9 @@ public class ArticleViewFragment extends PageViewFragment
                         populateArticle();
                         populateList();
                         mAdapter.notifyDataSetChanged();
-                        mSwipeRefreshLayout.setRefreshing(false);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
-                }).execute(mBaseUrl);
+                }).execute(urlUnchanging);
             }
         });
 	}
@@ -98,7 +98,7 @@ public class ArticleViewFragment extends PageViewFragment
         Element frags = document.select("span#thread-frag-count").first();
         Element forum = document.select("div.thread-header-desc").first();
 
-        ThreadComment article = new ThreadComment(title.text(), frags.text(), author.text() + forum.text(), body.html(), null, null, mBaseUrl);
+        ThreadComment article = new ThreadComment(title.text(), frags.text(), author.text() + forum.text(), body.html(), null, null, urlUnchanging);
 
         if(listItems == null)
             listItems = new ArrayList<>();
@@ -129,7 +129,7 @@ public class ArticleViewFragment extends PageViewFragment
 			Element frags = curComment.select("span.post-frag-count").first();
 
 			//public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)
-			ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(),body.html(), footer.text(), postNumber.text(), mBaseUrl+postNumber.text());
+			ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(),body.html(), footer.text(), postNumber.text(), urlUnchanging +postNumber.text());
 			listItems.add(tc);
 		}
 	}

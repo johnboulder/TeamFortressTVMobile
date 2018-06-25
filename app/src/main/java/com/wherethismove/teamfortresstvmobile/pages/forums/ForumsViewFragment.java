@@ -21,7 +21,7 @@ public class ForumsViewFragment extends PageViewFragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 
-            mUrl = getArguments().getString(ARG_URL);
+            url = getArguments().getString(ARG_URL);
             mLayout = getArguments().getInt(ARG_LAYOUT);
         }
     }

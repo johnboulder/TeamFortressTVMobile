@@ -1,27 +1,20 @@
 package com.wherethismove.teamfortresstvmobile.pages.comments;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.wherethismove.teamfortresstvmobile.R;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 import com.wherethismove.teamfortresstvmobile.utils.GetNewPageDataTask;
 import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.view.ViewGroup.FOCUS_BLOCK_DESCENDANTS;
@@ -78,12 +71,12 @@ public class ThreadViewFragment extends PageViewFragment {
                         mAdapter.notifyDataSetChanged();
                     }
                 },
-                mBaseUrl
+                urlUnchanging
         ));
 
         //TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
-        mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 
             @Override
             public void onRefresh()
@@ -108,9 +101,9 @@ public class ThreadViewFragment extends PageViewFragment {
                         document = doc;
                         populateList();
                         mAdapter.notifyDataSetChanged();
-                        mSwipeRefreshLayout.setRefreshing(false);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
-                }).execute(mBaseUrl+"/?page="+page.toString());
+                }).execute(urlUnchanging +"/?page="+page.toString());
             }
         });
     }
@@ -153,7 +146,7 @@ public class ThreadViewFragment extends PageViewFragment {
             // Split the footer text to remove the "quote" link and everything after it
             footer_s = footer_s.split("quote")[0];
 
-            ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(), body.html(), footer_s , postNumber.text(), mBaseUrl+postNumber.text());
+            ThreadComment tc = new ThreadComment(postNumber.text()+" "+ header.text(), frags.text(), forum.text(), body.html(), footer_s , postNumber.text(), urlUnchanging +postNumber.text());
             listItems.add(tc);
         }
     }

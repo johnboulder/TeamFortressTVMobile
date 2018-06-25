@@ -1,15 +1,9 @@
 package com.wherethismove.teamfortresstvmobile.pages.threads;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.ToggleButton;
@@ -53,11 +47,6 @@ public class ThreadListViewFragment extends PageViewFragment
         return fragment;
     }
 
-    private String getUrl()
-    {
-        return mUrl;
-    }
-
     // TODO: refactor, View v param is unnecessary
     @Override
     protected void initializeList(View v){
@@ -70,16 +59,16 @@ public class ThreadListViewFragment extends PageViewFragment
                 switch(j)
                 {
                     case 0:
-                        mUrl = mUrl+"/?sort=hot";
+                        url = url +"/?sort=hot";
                         break;
                     case 1:
-                        mUrl = mUrl+"/?sort=active";
+                        url = url +"/?sort=active";
                         break;
                     case 2:
-                        mUrl = mUrl+"/?sort=new";
+                        url = url +"/?sort=new";
                         break;
                     case 3:
-                        mUrl = mUrl+"/?sort=top";
+                        url = url +"/?sort=top";
                         break;
                 }
             }
@@ -100,7 +89,7 @@ public class ThreadListViewFragment extends PageViewFragment
         // TODO set this up so that a callback is passed to LoadListItemOnScrollListener
         // and any calculations are done within the callback. Make it so the callback can be used
         // here or setOnRefreshListener. Consider making a URL object
-        mOnScrollListener = new LoadListItemOnScrollListener(
+        onScrollListener = new LoadListItemOnScrollListener(
                 new RefreshFragmentListCallback()
                 {
                     @Override
@@ -111,35 +100,13 @@ public class ThreadListViewFragment extends PageViewFragment
                         mAdapter.notifyDataSetChanged();
                     }
                 },
-                mUrl
+                url
         );
-        lv.setOnScrollListener(mOnScrollListener);
+        lv.setOnScrollListener(onScrollListener);
 
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//        {
-//
-//            // Show extended information for the thread
-//            // Set a number of different items in the view from "gone" to "visible"
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-//
-//                // ListView Clicked item value
-//
-//
-//                //Toggle the button's visibility
-//                int visibility = b.getVisibility();
-//
-//                if(visibility == Button.GONE)
-//                    b.setVisibility(Button.VISIBLE);
-//                else
-//                    b.setVisibility(Button.GONE);
-//            }
-//
-//        });
-
-        //TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
-        mSwipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        // TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
+        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 
             @Override
             public void onRefresh()
@@ -156,9 +123,9 @@ public class ThreadListViewFragment extends PageViewFragment
                         document = doc;
                         populateList();
                         mAdapter.notifyDataSetChanged();
-                        mSwipeRefreshLayout.setRefreshing(false);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
-                }).execute(mUrl);
+                }).execute(url);
             }
         });
 
@@ -174,16 +141,16 @@ public class ThreadListViewFragment extends PageViewFragment
                 switch(i)
                 {
                     case R.id.button_sort_active:
-                        mUrl = mBaseUrl+"/?sort=active";
+                        url = urlUnchanging +"/?sort=active";
                         break;
                     case R.id.button_sort_hot:
-                        mUrl = mBaseUrl+"/?sort=hot";
+                        url = urlUnchanging +"/?sort=hot";
                         break;
                     case R.id.button_sort_new:
-                        mUrl = mBaseUrl+"/?sort=new";
+                        url = urlUnchanging +"/?sort=new";
                         break;
                     case R.id.button_sort_top:
-                        mUrl = mBaseUrl+"/?sort=top";
+                        url = urlUnchanging +"/?sort=top";
                         break;
                 }
                 new GetNewPageDataTask(new RefreshFragmentListCallback()
@@ -196,8 +163,8 @@ public class ThreadListViewFragment extends PageViewFragment
                         listItems.add(new ForumThread("Loading", "Loading", "Loading", "Loading", "Loading", "Loading", "Loading"));
                         mAdapter.notifyDataSetChanged();
                         listItems.clear();
-                        mOnScrollListener.resetItemCount();
-                        mOnScrollListener = new LoadListItemOnScrollListener(
+                        onScrollListener.resetItemCount();
+                        onScrollListener = new LoadListItemOnScrollListener(
                                 new RefreshFragmentListCallback()
                                 {
                                     @Override
@@ -208,15 +175,15 @@ public class ThreadListViewFragment extends PageViewFragment
                                         mAdapter.notifyDataSetChanged();
                                     }
                                 },
-                                mUrl
+                                url
                         );
-                        lv.setOnScrollListener(mOnScrollListener);
-                        mOnScrollListener.resetItemCount();
+                        lv.setOnScrollListener(onScrollListener);
+                        onScrollListener.resetItemCount();
                         document = doc;
                         populateList();
                         mAdapter.notifyDataSetChanged();
                     }
-                }).execute(mUrl);
+                }).execute(url);
             }
         });
 
@@ -245,7 +212,7 @@ public class ThreadListViewFragment extends PageViewFragment
             String title = mainData.select("a.title").first().text();
             // Get the link to the thread
             String threadURL = mainData.select("a.title").first().attr("href");
-            String threadURLWithoutPage = MainActivity.siteRoot+threadURL;
+            String threadURLWithoutPage = MainActivity.WEBSITE_HOSTNAME +threadURL;
             // Get the Forum it's in
             // Only appears when in the "Threads" section of the website
             Element description = mainData.select("div.description").first();
