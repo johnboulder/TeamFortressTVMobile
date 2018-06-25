@@ -13,7 +13,9 @@
         app:srcCompat="@drawable/image_404" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Test" />
+        android:layout_gravity="center_horizontal"
+        android:textSize="24sp"
+        tools:text="Something went wrong." />
 </LinearLayout>

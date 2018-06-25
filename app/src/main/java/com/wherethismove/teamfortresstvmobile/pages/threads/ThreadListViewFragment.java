@@ -61,10 +61,10 @@ public class ThreadListViewFragment extends PageViewFragment
     // TODO: refactor, View v param is unnecessary
     @Override
     protected void initializeList(View v){
-        RadioGroup rg = (RadioGroup) getView().findViewById(R.id.radio_group_sort);
-        for (int j = 0; j < rg.getChildCount(); j++)
+        RadioGroup radioGroup = (RadioGroup) getView().findViewById(R.id.radio_group_sort);
+        for (int j = 0; j < radioGroup.getChildCount(); j++)
         {
-            final ToggleButton view = (ToggleButton) rg.getChildAt(j);
+            final ToggleButton view = (ToggleButton) radioGroup.getChildAt(j);
             if(view.isChecked())
             {
                 switch(j)
@@ -162,7 +162,7 @@ public class ThreadListViewFragment extends PageViewFragment
             }
         });
 
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
 
