@@ -212,7 +212,7 @@ public class ThreadListViewFragment extends PageViewFragment
             String title = mainData.select("a.title").first().text();
             // Get the link to the thread
             String threadURL = mainData.select("a.title").first().attr("href");
-            String threadURLWithoutPage = MainActivity.WEBSITE_HOSTNAME +threadURL;
+            String threadURLWithoutPage = MainActivity.URL_HOSTNAME +threadURL;
             // Get the Forum it's in
             // Only appears when in the "Threads" section of the website
             Element description = mainData.select("div.description").first();

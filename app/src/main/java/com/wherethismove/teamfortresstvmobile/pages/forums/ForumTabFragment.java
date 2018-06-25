@@ -78,7 +78,7 @@ public class ForumTabFragment extends PageViewFragment
             // Get the title
             Element title = curSubForum.select("a.subforum-title").first();
 
-            Forum f = new Forum(posts.text(), threads.text(), lastActivity.text(), title.text(), desc.text(), MainActivity.WEBSITE_HOSTNAME +title.attr("href"));
+            Forum f = new Forum(posts.text(), threads.text(), lastActivity.text(), title.text(), desc.text(), MainActivity.URL_HOSTNAME +title.attr( "href"));
             listItems.add(f);
         }
 

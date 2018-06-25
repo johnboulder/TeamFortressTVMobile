@@ -17,7 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
 import com.wherethismove.teamfortresstvmobile.pages.AboutPageFragment;
-import com.wherethismove.teamfortresstvmobile.pages.ErrorPageFragment;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.articles.ArticleViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.comments.ThreadViewFragment;
@@ -45,12 +44,17 @@ public class MainActivity
         AboutPageFragment.OnFragmentInteractionListener
 {
     Document document;
-    public static URL WEBSITE_HOSTNAME;
-    private final String PATH_FORUMS = "/forums";
-    private final String PATH_THREADS = "/threads";
-    private final String PATH_SCHEDULE = "/schedule";
-    private final String PATH_NEWS = "/news";
-    private final String PATH_GALLERIES = "/galleries";
+
+    private final String HOSTNAME = "http://www.teamfortress.tv";
+    private final String PATH_FORUMS = "forums";
+    private final String PATH_THREADS = "threads";
+    private final String PATH_SCHEDULE = "schedule";
+    private final String PATH_NEWS = "news";
+    private final String PATH_GALLERIES = "galleries";
+
+    public static URL URL_HOSTNAME;
+    private static URL URL_THREADS;
+    private static URL URL_FORUMS;
 
     public final String ERROR_FRAGMENT_BSTACK_NAME = "error_fragment";
 
@@ -66,7 +70,9 @@ public class MainActivity
 
         try
         {
-            WEBSITE_HOSTNAME = new URL( "http://www.teamfortress.tv" );
+            URL_HOSTNAME = new URL( HOSTNAME );
+            URL_FORUMS = new URL( URL_HOSTNAME, PATH_FORUMS );
+            URL_THREADS = new URL( URL_HOSTNAME, PATH_THREADS );
         }
         catch( MalformedURLException e )
         {
@@ -149,21 +155,21 @@ public class MainActivity
                       "home_page_fragment" )
                 .commit( );
 
-        new GetPageDataTask( new PageViewFragment.GetDocumentCallback( ) {
-            @Override
-            public void refreshList( Document document )
-            {
-                /**/
-            }
+        new GetPageDataTask(
+                new PageViewFragment.GetDocumentCallback( ) {
+                    @Override
+                    public void refreshList( Document document )
+                    {
+                        /**/
+                    }
 
-            @Override
-            public void callback( View view,
-                                  Document result )
-            {
-                document = result;
-            }
-        },
-                             v ).execute( WEBSITE_HOSTNAME.toString( ) );
+                    @Override
+                    public void callback( View view,
+                                          Document result )
+                    {
+                        document = result;
+                    }
+                }, v ).execute( URL_HOSTNAME.toString( ) );
 
     }
 
@@ -220,19 +226,15 @@ public class MainActivity
     public void openArticle( String articleSubdomain )
     {
         Bundle args = new Bundle( );
-        args.putString( PageViewFragment.ARG_URL,
-                        WEBSITE_HOSTNAME + articleSubdomain );
-        args.putInt( PageViewFragment.ARG_LAYOUT,
-                     R.layout.fragment_article_view );
+        args.putString( PageViewFragment.ARG_URL, URL_HOSTNAME + articleSubdomain );
+        args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_article_view );
         ArticleViewFragment article = new ArticleViewFragment( );
         article.setArguments( args );
 
         // Replace fragment
         FragmentManager fm = getSupportFragmentManager( );
         fm.beginTransaction( )
-                .replace( R.id.fragment_container,
-                          article,
-                          null )
+                .replace( R.id.fragment_container, article, null )
                 .addToBackStack( null )
                 .commit( );
     }
@@ -295,10 +297,10 @@ public class MainActivity
         if( id == R.id.nav_home )
         {
             setTitle( "TF.TV Mobile" );
-            //http://www.teamfortress.tv/
+            // http://www.teamfortress.tv/
             Bundle args = new Bundle( );
             args.putString( "url",
-                            WEBSITE_HOSTNAME.toString() );
+                            URL_HOSTNAME.toString( ) );
             args.putInt( PageViewFragment.ARG_LAYOUT,
                          R.layout.fragment_home_page );
             HomePageFragment home = new HomePageFragment( );
@@ -315,13 +317,12 @@ public class MainActivity
         else if( id == R.id.nav_threads )
         {
             setTitle( "Threads" );
-            //http://www.teamfortress.tv/threads
+            // http://www.teamfortress.tv/threads
             // Replace fragment
             Bundle args = new Bundle( );
-            args.putString( "url",
-                            WEBSITE_HOSTNAME.toString() + PATH_THREADS );
-            args.putInt( PageViewFragment.ARG_LAYOUT,
-                         R.layout.fragment_thread_list_view );
+            args.putString( PageViewFragment.ARG_URL, URL_HOSTNAME.toString( ) + "/" + PATH_THREADS );
+            args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_thread_list_view );
+            args.putSerializable( PageViewFragment.ARG_URL_OBJECT, URL_THREADS );
             ThreadListViewFragment threads = new ThreadListViewFragment( );
             threads.setArguments( args );
 
@@ -338,10 +339,9 @@ public class MainActivity
             setTitle( "Forums" );
             //http://www.teamfortress.tv/forums
             Bundle args = new Bundle( );
-            args.putString( "url",
-                            WEBSITE_HOSTNAME.toString() + PATH_FORUMS );
-            args.putInt( PageViewFragment.ARG_LAYOUT,
-                         R.layout.fragment_forums_tabbed_view );
+            args.putString( "url", URL_HOSTNAME.toString( ) + "/" + PATH_FORUMS );
+            args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_forums_tabbed_view );
+            args.putSerializable( PageViewFragment.ARG_URL_OBJECT, URL_FORUMS );
             ForumsViewFragment forums = new ForumsViewFragment( );
             forums.setArguments( args );
 
