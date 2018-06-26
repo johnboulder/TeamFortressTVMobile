@@ -22,246 +22,221 @@ import java.util.ArrayList;
 
 
 /**
- *
  * TODO make abstract class?
  */
 public class ThreadListTabFragment
         extends PageViewFragment
 {
-    protected ArrayList<ThreadListItem > listItems;
+    protected ArrayList< ThreadListItem > listItems;
     private ThreadListAdapter mAdapter;
     private OnThreadSelectedListener mListener;
     private String mTitle;
 
-    public ThreadListTabFragment() {
+    private int position;
+    public static final String ARG_POSITION = "position";
+
+    public ThreadListTabFragment( )
+    {
         // Required empty public constructor
     }
 
-    public static ThreadListTabFragment newInstance( String url, int layout) {
-        ThreadListTabFragment fragment = new ThreadListTabFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_URL, url);
-        args.putInt(ARG_LAYOUT, layout);
-        fragment.setArguments(args);
+    public static ThreadListTabFragment newInstance( int position )
+    {
+        ThreadListTabFragment fragment = new ThreadListTabFragment( );
+        Bundle args = new Bundle( );
+        args.putInt( ARG_POSITION, position );
+        fragment.setArguments( args );
         return fragment;
+    }
+
+    @Override
+    public void onCreate( Bundle savedInstanceState )
+    {
+        super.onCreate( savedInstanceState );
+        if( getArguments( ) != null )
+        {
+            position = getArguments( ).getInt( ARG_POSITION );
+            // Always the same
+            layout = R.layout.fragment_thread_list_tab;
+            // Always the same
+            url = "http://www.teamfortress.tv/threads";
+        }
     }
 
     // TODO: refactor, View v param is unnecessary
     @Override
-    protected void initializeList(View v){
-        RadioGroup radioGroup = (RadioGroup) getView().findViewById(R.id.radio_group_sort);
-        for (int j = 0; j < radioGroup.getChildCount(); j++)
+    protected void initializeList( View v )
+    {
+        switch( position )
         {
-            final ToggleButton view = (ToggleButton) radioGroup.getChildAt(j);
-            if(view.isChecked())
-            {
-                switch(j)
-                {
-                    case 0:
-                        url = url +"/?sort=hot";
-                        break;
-                    case 1:
-                        url = url +"/?sort=active";
-                        break;
-                    case 2:
-                        url = url +"/?sort=new";
-                        break;
-                    case 3:
-                        url = url +"/?sort=top";
-                        break;
-                }
-            }
+            case 0:
+                url = url + "/?sort=hot";
+                break;
+            case 1:
+                url = url + "/?sort=active";
+                break;
+            case 2:
+                url = url + "/?sort=new";
+                break;
+            case 3:
+                url = url + "/?sort=top";
+                break;
         }
-        final ListView lv = (ListView) v.findViewById(R.id.thread_list);
+        final ListView lv = ( ListView ) v.findViewById( R.id.thread_list );
 
         // Fill the thread list with threads
-        populateList();
+        populateList( );
 
-        // Pass a
-        mAdapter = new ThreadListAdapter( v.getContext(), mListener, listItems);
-        lv.setAdapter(mAdapter);
+        mAdapter = new ThreadListAdapter( v.getContext( ), mListener, listItems );
+        lv.setAdapter( mAdapter );
 
-        // Setup the scroll listener which updates the contents of the listView whenever the last
-        // item in the list becomes visible
+        // Setup the scroll listener which updates the contents of the listView whenever the last item in the list becomes visible
         // NOTE: This changes the value of document.
         // TODO get rid of calculations that occur in LoadListItemOnScrollListener
         // TODO set this up so that a callback is passed to LoadListItemOnScrollListener
         // and any calculations are done within the callback. Make it so the callback can be used
         // here or setOnRefreshListener. Consider making a URL object
         onScrollListener = new LoadListItemOnScrollListener(
-                new RefreshFragmentListCallback()
-                {
+                new RefreshFragmentListCallback( ) {
                     @Override
-                    public void refreshList(Document doc)
+                    public void refreshList( Document doc )
                     {
                         document = doc;
-                        populateList();
-                        mAdapter.notifyDataSetChanged();
+                        populateList( );
+                        mAdapter.notifyDataSetChanged( );
                     }
                 },
                 url
         );
-        lv.setOnScrollListener(onScrollListener);
+        lv.setOnScrollListener( onScrollListener );
 
         // TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
-        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        View rootView = getView( );
+        if( rootView != null )
+        {
+            swipeRefreshLayout = ( SwipeRefreshLayout ) rootView.findViewById( R.id.swipe_refresh );
+            swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener( ) {
 
-            @Override
-            public void onRefresh()
-            {
-                // Just get the page again, the site already refreshes the data
-                new GetNewPageDataTask(new RefreshFragmentListCallback()
+                @Override
+                public void onRefresh( )
                 {
-                    // TODO refactor so only the changed portions of each listItem are changed
-                    @Override
-                    public void refreshList(Document doc)
-                    {
-                        listItems.clear();
-                        mAdapter.notifyDataSetChanged();
-                        document = doc;
-                        populateList();
-                        mAdapter.notifyDataSetChanged();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }).execute(url);
-            }
-        });
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
-
-                for (int j = 0; j < radioGroup.getChildCount(); j++)
-                {
-                    final ToggleButton view = (ToggleButton) radioGroup.getChildAt(j);
-                    view.setChecked(view.getId() == i);
+                    // Just get the page again, the site already refreshes the data
+                    new GetNewPageDataTask( new RefreshFragmentListCallback( ) {
+                        // TODO refactor so only the changed portions of each listItem are changed
+                        @Override
+                        public void refreshList( Document doc )
+                        {
+                            listItems.clear( );
+                            mAdapter.notifyDataSetChanged( );
+                            document = doc;
+                            populateList( );
+                            mAdapter.notifyDataSetChanged( );
+                            swipeRefreshLayout.setRefreshing( false );
+                        }
+                    } ).execute( url );
                 }
-                switch(i)
-                {
-                    case R.id.button_sort_active:
-                        url = urlUnchanging +"/?sort=active";
-                        break;
-                    case R.id.button_sort_hot:
-                        url = urlUnchanging +"/?sort=hot";
-                        break;
-                    case R.id.button_sort_new:
-                        url = urlUnchanging +"/?sort=new";
-                        break;
-                    case R.id.button_sort_top:
-                        url = urlUnchanging +"/?sort=top";
-                        break;
-                }
-                new GetNewPageDataTask(new RefreshFragmentListCallback()
-                {
-                    // TODO refactor so only the changed portions of each listItem are changed
-                    @Override
-                    public void refreshList(Document doc)
-                    {
-                        listItems.clear();
-                        listItems.add(new ThreadListItem( "Loading", "Loading", "Loading", "Loading", "Loading", "Loading", "Loading"));
-                        mAdapter.notifyDataSetChanged();
-                        listItems.clear();
-                        onScrollListener.resetItemCount();
-                        onScrollListener = new LoadListItemOnScrollListener(
-                                new RefreshFragmentListCallback()
-                                {
-                                    @Override
-                                    public void refreshList(Document doc)
-                                    {
-                                        document = doc;
-                                        populateList();
-                                        mAdapter.notifyDataSetChanged();
-                                    }
-                                },
-                                url
-                        );
-                        lv.setOnScrollListener(onScrollListener);
-                        onScrollListener.resetItemCount();
-                        document = doc;
-                        populateList();
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }).execute(url);
-            }
-        });
+            } );
+        }
 
-        mTitle = document.select("#content > div:nth-child(4) > div > div:nth-child(2)").text();
-        if(mTitle == "")
+        mTitle = document.select( "#content > div:nth-child(4) > div > div:nth-child(2)" )
+                .text( );
+        if( mTitle == "" )
+        {
             mTitle = "Threads";
-        getActivity().setTitle(mTitle);
+        }
+        getActivity( ).setTitle( mTitle );
     }
 
     @Override
-    protected void populateList()
+    protected void populateList( )
     {
-        if(listItems == null)
-            listItems = new ArrayList<>();
-
-        Elements threads = document.select("div.thread");
-
-        for(int i = 0; i<threads.size(); i++)
+        if( listItems == null )
         {
-            Element curThread = threads.get(i);
-            Element frags = curThread.select(".frag-count").first();
+            listItems = new ArrayList<>( );
+        }
 
-            Element mainData = curThread.select("div.block.main").first();
+        Elements threads = document.select( "div.thread" );
+
+        for( int i = 0; i < threads.size( ); i++ )
+        {
+            Element curThread = threads.get( i );
+            Element frags = curThread.select( ".frag-count" )
+                    .first( );
+
+            Element mainData = curThread.select( "div.block.main" )
+                    .first( );
 
             // Get the thread title
-            String title = mainData.select("a.title").first().text();
+            String title = mainData.select( "a.title" )
+                    .first( )
+                    .text( );
             // Get the link to the thread
-            String threadURL = mainData.select("a.title").first().attr("href");
-            String threadURLWithoutPage = MainActivity.URL_HOSTNAME +threadURL;
+            String threadURL = mainData.select( "a.title" )
+                    .first( )
+                    .attr( "href" );
+            String threadURLWithoutPage = MainActivity.URL_HOSTNAME + threadURL;
             // Get the ForumListItem it's in
             // Only appears when in the "Threads" section of the website
-            Element description = mainData.select("div.description").first();
+            Element description = mainData.select( "div.description" )
+                    .first( );
             // Get the posts
-            String posts = curThread.select("span.post-count").first().text();
+            String posts = curThread.select( "span.post-count" )
+                    .first( )
+                    .text( );
             // Get the pages
-            Integer pages = curThread.select("a.thread-pages").size();
+            Integer pages = curThread.select( "a.thread-pages" )
+                    .size( );
             // Get the OP TODO refer to ForumListViewFragment on getting usernames
             String op = "username";
             // Get the postTime (use div.description for username+postTime+forum)
-            String postTime = mainData.select("span.date-eta").text();
+            String postTime = mainData.select( "span.date-eta" )
+                    .text( );
 
-            ThreadListItem ft = new ThreadListItem( posts, pages.toString(), op, title, description.text(), frags.text(), threadURLWithoutPage);
+            ThreadListItem ft = new ThreadListItem( posts, pages.toString( ), op, title, description.text( ), frags.text( ), threadURLWithoutPage );
 
-            listItems.add(ft);
+            listItems.add( ft );
         }
     }
 
-    public void onThreadSelected(String url) {
-        if (mListener != null) {
-            mListener.openThread(url);
-        }
-    }
-
-    @Override
-    public void onResume ()
+    public void onThreadSelected( String url )
     {
-        super.onResume();
-        getActivity().setTitle(mTitle);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnThreadSelectedListener) {
-            mListener = (OnThreadSelectedListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnThreadSelectedListener");
+        if( mListener != null )
+        {
+            mListener.openThread( url );
         }
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onResume( )
+    {
+        super.onResume( );
+        getActivity( ).setTitle( mTitle );
+    }
+
+    @Override
+    public void onAttach( Context context )
+    {
+        super.onAttach( context );
+        if( context instanceof OnThreadSelectedListener )
+        {
+            mListener = ( OnThreadSelectedListener ) context;
+        }
+        else
+        {
+            throw new RuntimeException( context.toString( )
+                                                + " must implement OnThreadSelectedListener" );
+        }
+    }
+
+    @Override
+    public void onDetach( )
+    {
+        super.onDetach( );
         mListener = null;
     }
 
     public interface OnThreadSelectedListener {
         // TODO: Update argument type and name
-        void openThread(String url);
+        void openThread( String url );
     }
 }

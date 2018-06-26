@@ -25,6 +25,7 @@ import com.wherethismove.teamfortresstvmobile.pages.forums.ForumListTabFragment;
 import com.wherethismove.teamfortresstvmobile.pages.forums.ForumListViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.HomePageFragment;
 import com.wherethismove.teamfortresstvmobile.pages.threads.ThreadListTabFragment;
+import com.wherethismove.teamfortresstvmobile.pages.threads.ThreadListViewFragment;
 import com.wherethismove.teamfortresstvmobile.utils.GetPageDataTask;
 
 import org.jsoup.nodes.Document;
@@ -294,10 +295,10 @@ public class MainActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId( );
 
+        // http://www.teamfortress.tv/
         if( id == R.id.nav_home )
         {
             setTitle( "TF.TV Mobile" );
-            // http://www.teamfortress.tv/
             Bundle args = new Bundle( );
             args.putString( "url",
                             URL_HOSTNAME.toString( ) );
@@ -314,16 +315,16 @@ public class MainActivity
                     .addToBackStack( null )
                     .commit( );
         }
+        // http://www.teamfortress.tv/threads
         else if( id == R.id.nav_threads )
         {
             setTitle( "Threads" );
-            // http://www.teamfortress.tv/threads
             // Replace fragment
             Bundle args = new Bundle( );
             args.putString( PageViewFragment.ARG_URL, URL_HOSTNAME.toString( ) + "/" + PATH_THREADS );
-            args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_thread_list_tab );
+            args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_generic_tabbed_view );
             args.putSerializable( PageViewFragment.ARG_URL_OBJECT, URL_THREADS );
-            ThreadListTabFragment threads = new ThreadListTabFragment( );
+            ThreadListViewFragment threads = new ThreadListViewFragment( );
             threads.setArguments( args );
 
             FragmentManager fragmentManager = getSupportFragmentManager( );
@@ -334,10 +335,10 @@ public class MainActivity
                     .addToBackStack( null )
                     .commit( );
         }
+        // http://www.teamfortress.tv/forums
         else if( id == R.id.nav_forums )
         {
             setTitle( "Forums" );
-            //http://www.teamfortress.tv/forums
             Bundle args = new Bundle( );
             args.putString( "url", URL_HOSTNAME.toString( ) + "/" + PATH_FORUMS );
             args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_generic_tabbed_view );
@@ -424,14 +425,6 @@ public class MainActivity
                               Document d )
     {
     }
-
-
-    //    public void errorLoadingPage() {
-    //        // Change the current fragment to an appropriate image
-    //        ErrorPageFragment errorFragment = new ErrorPageFragment();
-    //        FragmentManager fm = getSupportFragmentManager();
-    //        fm.beginTransaction().replace(R.id.fragment_container, errorFragment, ERROR_FRAGMENT_BSTACK_NAME).addToBackStack(ERROR_FRAGMENT_BSTACK_NAME).commit();
-    //    }
 
     @Override
     public void onTabForumSelected( ForumListItem f )

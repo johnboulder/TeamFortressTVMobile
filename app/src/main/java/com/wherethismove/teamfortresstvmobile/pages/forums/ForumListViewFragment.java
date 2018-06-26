@@ -23,7 +23,7 @@ public class ForumListViewFragment
         if (getArguments() != null) {
 
             url = getArguments().getString(ARG_URL);
-            mLayout = getArguments().getInt(ARG_LAYOUT);
+            layout = getArguments().getInt( ARG_LAYOUT);
         }
     }
 

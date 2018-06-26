@@ -27,7 +27,7 @@ public abstract class PageViewFragment extends Fragment {
     protected URL _url;
     protected String url;
     protected String urlUnchanging;
-    protected int mLayout;
+    protected int layout;
     protected SwipeRefreshLayout swipeRefreshLayout;
     protected LoadListItemOnScrollListener onScrollListener;
 
@@ -43,14 +43,14 @@ public abstract class PageViewFragment extends Fragment {
 
             urlUnchanging = getArguments().getString(ARG_URL);
             url = urlUnchanging;
-            mLayout = getArguments().getInt(ARG_LAYOUT);
+            layout = getArguments().getInt( ARG_LAYOUT);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(mLayout, container, false);
+        View v = inflater.inflate( layout, container, false);
         final View v2 = v;
 
         // Needs to return a document
