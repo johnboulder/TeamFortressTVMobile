@@ -32,7 +32,7 @@ public class ThreadListFragmentPagerAdapter
     @Override
     public Fragment getItem( int position )
     {
-        return ThreadListTabFragment.newInstance( position );
+        return ThreadListTabFragment.newInstance( position, null );
     }
 
     @Override

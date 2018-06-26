@@ -14,6 +14,7 @@ import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 import com.wherethismove.teamfortresstvmobile.utils.GetNewPageDataTask;
 import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
 
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -32,7 +33,7 @@ public class ThreadListTabFragment
     private OnThreadSelectedListener mListener;
     private String mTitle;
 
-    private int position;
+    private Integer position;
     public static final String ARG_POSITION = "position";
 
     public ThreadListTabFragment( )
@@ -40,33 +41,18 @@ public class ThreadListTabFragment
         // Required empty public constructor
     }
 
-    public static ThreadListTabFragment newInstance( int position )
+    public static ThreadListTabFragment newInstance( Integer position,
+                                                     String url )
     {
         ThreadListTabFragment fragment = new ThreadListTabFragment( );
         Bundle args = new Bundle( );
         args.putInt( ARG_POSITION, position );
-        fragment.setArguments( args );
-        return fragment;
-    }
 
-    @Override
-    public void onCreate( Bundle savedInstanceState )
-    {
-        super.onCreate( savedInstanceState );
-        if( getArguments( ) != null )
+        if( StringUtil.isBlank( url ) )
         {
-            position = getArguments( ).getInt( ARG_POSITION );
-            // Always the same
-            layout = R.layout.fragment_thread_list_tab;
-            // Always the same
             url = "http://www.teamfortress.tv/threads";
         }
-    }
 
-    // TODO: refactor, View v param is unnecessary
-    @Override
-    protected void initializeList( View v )
-    {
         switch( position )
         {
             case 0:
@@ -81,7 +67,39 @@ public class ThreadListTabFragment
             case 3:
                 url = url + "/?sort=top";
                 break;
+            default:
+                break;
         }
+
+        args.putString( ARG_URL, url );
+        fragment.setArguments( args );
+        return fragment;
+    }
+
+    @Override
+    public void onCreate( Bundle savedInstanceState )
+    {
+        super.onCreate( savedInstanceState );
+        if( getArguments( ) != null )
+        {
+            position = getArguments( ).getInt( ARG_POSITION );
+
+            // Always the same
+            layout = R.layout.fragment_thread_list_tab;
+
+            url = getArguments( ).getString( ARG_URL );
+
+            if( StringUtil.isBlank( url ) )
+            {
+                url = "http://www.teamfortress.tv/threads";
+            }
+        }
+    }
+
+    // TODO: refactor, View v param is unnecessary
+    @Override
+    protected void initializeList( View v )
+    {
         final ListView lv = ( ListView ) v.findViewById( R.id.thread_list );
 
         // Fill the thread list with threads

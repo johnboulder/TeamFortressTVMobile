@@ -432,9 +432,9 @@ public class MainActivity
         setTitle( f.getTitle( ) );
         // TODO merge the code for opening thread_list_views from this method and the navigation_drawer above
         Bundle args = new Bundle( );
-        args.putString( "url",
+        args.putString( PageViewFragment.ARG_URL,
                         f.getForumUrl( ) );
-        args.putInt( "layout",
+        args.putInt( PageViewFragment.ARG_LAYOUT,
                      R.layout.fragment_thread_list_tab );
         ThreadListTabFragment threads = new ThreadListTabFragment( );
         threads.setArguments( args );
