@@ -19,20 +19,21 @@ import java.util.ArrayList;
  * TODO Implement this class with static forum list values, where when onSwipeRefresh occurs
  * the only values that are updated are the recent activity in each subforum
  */
-public class ForumTabFragment extends PageViewFragment
+public class ForumListTabFragment
+        extends PageViewFragment
 {
     private OnTabForumSelectedListener mListener;
     private int mPosition;
-    protected ArrayList<Forum> listItems;
+    protected ArrayList<ForumListItem > listItems;
     public static final String ARG_POSITION = "position";
 
 
-    public ForumTabFragment() {
+    public ForumListTabFragment() {
         // Required empty public constructor
     }
     // TODO: Rename and change types and number of parameters
-    public static ForumTabFragment newInstance(int position) {
-        ForumTabFragment fragment = new ForumTabFragment();
+    public static ForumListTabFragment newInstance( int position) {
+        ForumListTabFragment fragment = new ForumListTabFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_POSITION, position);
         fragment.setArguments(args);
@@ -78,11 +79,11 @@ public class ForumTabFragment extends PageViewFragment
             // Get the title
             Element title = curSubForum.select("a.subforum-title").first();
 
-            Forum f = new Forum(posts.text(), threads.text(), lastActivity.text(), title.text(), desc.text(), MainActivity.URL_HOSTNAME +title.attr( "href"));
+            ForumListItem f = new ForumListItem( posts.text(), threads.text(), lastActivity.text(), title.text(), desc.text(), MainActivity.URL_HOSTNAME +title.attr( "href"));
             listItems.add(f);
         }
 
-        ForumAdapter adapter = new ForumAdapter(v.getContext(), listItems);
+        ForumListAdapter adapter = new ForumListAdapter( v.getContext(), listItems);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,7 +92,7 @@ public class ForumTabFragment extends PageViewFragment
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
                 // ListView Clicked item value
-                Forum itemValue = (Forum) lv.getItemAtPosition(position);
+                ForumListItem itemValue = (ForumListItem ) lv.getItemAtPosition( position);
                 forumSelected(itemValue);
             }
 
@@ -103,7 +104,7 @@ public class ForumTabFragment extends PageViewFragment
 
     }
 
-    public void forumSelected(Forum f) {
+    public void forumSelected(ForumListItem f) {
         if (mListener != null) {
             mListener.onTabForumSelected(f);
         }
@@ -129,6 +130,6 @@ public class ForumTabFragment extends PageViewFragment
     // Implemented by the activity that contains this fragment.
     // Used for swapping out the forum fragment, and swapping in the
     public interface OnTabForumSelectedListener {
-        void onTabForumSelected(Forum f);
+        void onTabForumSelected(ForumListItem f);
     }
 }

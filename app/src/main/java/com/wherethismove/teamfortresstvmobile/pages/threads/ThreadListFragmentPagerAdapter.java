@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.wherethismove.teamfortresstvmobile.pages.forums.ForumTabFragment;
+import com.wherethismove.teamfortresstvmobile.pages.forums.ForumListTabFragment;
 
 /**
  * Created by stockweezie on 1/8/2016.
@@ -32,7 +32,7 @@ public class ThreadListFragmentPagerAdapter
     @Override
     public Fragment getItem( int position )
     {
-        return ForumTabFragment.newInstance( position );
+        return ForumListTabFragment.newInstance( position );
     }
 
     @Override

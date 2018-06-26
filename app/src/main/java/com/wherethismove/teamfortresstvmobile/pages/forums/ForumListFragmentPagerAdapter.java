@@ -8,15 +8,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 /**
  * Created by stockweezie on 1/8/2016.
  */
-public class ForumListPagerAdapter
+public class ForumListFragmentPagerAdapter
         extends FragmentPagerAdapter
 {
     final int PAGE_COUNT = 4;
     private String tabTitles[] = new String[]{"TF2", "CSGO", "General", "Site"};
     private Context context;
 
-    public ForumListPagerAdapter( FragmentManager fm,
-                                  Context context )
+    public ForumListFragmentPagerAdapter( FragmentManager fm,
+                                          Context context )
     {
         super( fm );
         this.context = context;
@@ -31,7 +31,7 @@ public class ForumListPagerAdapter
     @Override
     public Fragment getItem( int position )
     {
-        return ForumTabFragment.newInstance( position );
+        return ForumListTabFragment.newInstance( position );
     }
 
     @Override

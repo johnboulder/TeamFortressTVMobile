@@ -20,9 +20,9 @@ import com.wherethismove.teamfortresstvmobile.pages.AboutPageFragment;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.articles.ArticleViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.comments.ThreadViewFragment;
-import com.wherethismove.teamfortresstvmobile.pages.forums.Forum;
-import com.wherethismove.teamfortresstvmobile.pages.forums.ForumTabFragment;
-import com.wherethismove.teamfortresstvmobile.pages.forums.ForumsViewFragment;
+import com.wherethismove.teamfortresstvmobile.pages.forums.ForumListItem;
+import com.wherethismove.teamfortresstvmobile.pages.forums.ForumListTabFragment;
+import com.wherethismove.teamfortresstvmobile.pages.forums.ForumListViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.HomePageFragment;
 import com.wherethismove.teamfortresstvmobile.pages.threads.ThreadListTabFragment;
 import com.wherethismove.teamfortresstvmobile.utils.GetPageDataTask;
@@ -38,7 +38,7 @@ public class MainActivity
         extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomePageFragment.OnFragmentInteractionListener,
-        ForumTabFragment.OnTabForumSelectedListener,
+        ForumListTabFragment.OnTabForumSelectedListener,
         ThreadListTabFragment.OnThreadSelectedListener,
         ThreadViewFragment.commentFiller,
         AboutPageFragment.OnFragmentInteractionListener
@@ -105,7 +105,7 @@ public class MainActivity
                         {
                             updateNavigationSelection( 1 );
                         }
-                        else if( f instanceof ForumsViewFragment )
+                        else if( f instanceof ForumListViewFragment )
                         {
                             setTitle( "Forums" );
                             updateNavigationSelection( 2 );
@@ -321,7 +321,7 @@ public class MainActivity
             // Replace fragment
             Bundle args = new Bundle( );
             args.putString( PageViewFragment.ARG_URL, URL_HOSTNAME.toString( ) + "/" + PATH_THREADS );
-            args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_thread_list_view );
+            args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_thread_list_tab );
             args.putSerializable( PageViewFragment.ARG_URL_OBJECT, URL_THREADS );
             ThreadListTabFragment threads = new ThreadListTabFragment( );
             threads.setArguments( args );
@@ -340,9 +340,9 @@ public class MainActivity
             //http://www.teamfortress.tv/forums
             Bundle args = new Bundle( );
             args.putString( "url", URL_HOSTNAME.toString( ) + "/" + PATH_FORUMS );
-            args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_forums_tabbed_view );
+            args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_generic_tabbed_view );
             args.putSerializable( PageViewFragment.ARG_URL_OBJECT, URL_FORUMS );
-            ForumsViewFragment forums = new ForumsViewFragment( );
+            ForumListViewFragment forums = new ForumListViewFragment( );
             forums.setArguments( args );
 
             FragmentManager fragmentManager = getSupportFragmentManager( );
@@ -434,7 +434,7 @@ public class MainActivity
     //    }
 
     @Override
-    public void onTabForumSelected( Forum f )
+    public void onTabForumSelected( ForumListItem f )
     {
         setTitle( f.getTitle( ) );
         // TODO merge the code for opening thread_list_views from this method and the navigation_drawer above
@@ -442,7 +442,7 @@ public class MainActivity
         args.putString( "url",
                         f.getForumUrl( ) );
         args.putInt( "layout",
-                     R.layout.fragment_thread_list_view );
+                     R.layout.fragment_thread_list_tab );
         ThreadListTabFragment threads = new ThreadListTabFragment( );
         threads.setArguments( args );
 

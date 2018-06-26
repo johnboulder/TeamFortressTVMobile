@@ -17,12 +17,20 @@
     <string name="button_sort_top">Top</string>
 
     <string name="about_app_page_text">
-        This app in it\'s entirety has been designed, and developed by John Walter Stockwell. Any questions, comments, concerns, criticisms, or funny cat pictures should be directed to:
+        This app in it\'s entirety has been designed, and developed by John Walter Stockwell. Any questions, comments,
+        concerns, criticisms, or funny cat pictures should be directed to:
     </string>
     <string name="stockwell_email">stocklett@gmail.com</string>
     <string name="about_app_affiliations_text">
-        This app claims no association with the individuals, or owners of the website TeamFortress.tv and claims no ownership of the content provided by that website. As a viewer app, the intention of this app is to simply make viewing the website easier than it would otherwise be.
+        This app claims no association with the individuals, or owners of the website TeamFortress.tv and claims no
+        ownership of the content provided by that website. As a viewer app, the intention of this app is to simply make
+        viewing the website easier than it would otherwise be.
     </string>
 
-    <string name="error_404_message">The content you requested appears to be unavailable, or an error occurred. Restart the app or press the button below to refresh the page.</string>
+    <string name="error_404_message">The content you requested appears to be unavailable, or an error occurred. Restart
+        the app or press the button below to refresh the page.
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

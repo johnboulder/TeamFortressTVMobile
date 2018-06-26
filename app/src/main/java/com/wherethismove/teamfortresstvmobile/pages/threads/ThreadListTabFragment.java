@@ -212,14 +212,14 @@ public class ThreadListTabFragment
             // Get the link to the thread
             String threadURL = mainData.select("a.title").first().attr("href");
             String threadURLWithoutPage = MainActivity.URL_HOSTNAME +threadURL;
-            // Get the Forum it's in
+            // Get the ForumListItem it's in
             // Only appears when in the "Threads" section of the website
             Element description = mainData.select("div.description").first();
             // Get the posts
             String posts = curThread.select("span.post-count").first().text();
             // Get the pages
             Integer pages = curThread.select("a.thread-pages").size();
-            // Get the OP TODO refer to ForumsViewFragment on getting usernames
+            // Get the OP TODO refer to ForumListViewFragment on getting usernames
             String op = "username";
             // Get the postTime (use div.description for username+postTime+forum)
             String postTime = mainData.select("span.date-eta").text();

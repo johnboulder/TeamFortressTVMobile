@@ -14,13 +14,14 @@ import java.util.ArrayList;
 /**
  * Created by stockweezie on 12/29/2015.
  */
-public class ForumAdapter extends BaseAdapter
+public class ForumListAdapter
+        extends BaseAdapter
 {
     private Context mContext;
-    private ArrayList<Forum> mData;
+    private ArrayList<ForumListItem > mData;
     private static LayoutInflater inflater = null;
 
-    public ForumAdapter(Context context, ArrayList<Forum> data)
+    public ForumListAdapter( Context context, ArrayList<ForumListItem > data)
     {
         this.mContext = context;
         this.mData = data;
@@ -52,7 +53,7 @@ public class ForumAdapter extends BaseAdapter
         if (vi == null)
             vi = inflater.inflate(R.layout.list_item_forum, null);
 
-        Forum current = mData.get(position);
+        ForumListItem current = mData.get( position);
         TextView posts = (TextView) vi.findViewById(R.id.posts);
         posts.setText(current.getNumberOfPosts());
 

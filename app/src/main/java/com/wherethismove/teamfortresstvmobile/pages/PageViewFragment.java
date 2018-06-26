@@ -31,7 +31,7 @@ public abstract class PageViewFragment extends Fragment {
     protected SwipeRefreshLayout swipeRefreshLayout;
     protected LoadListItemOnScrollListener onScrollListener;
 
-    // TODO make a parent object for ThreadComment, ThreadListItem, and Forum to use here in listItems
+    // TODO make a parent object for ThreadComment, ThreadListItem, and ForumListItem to use here in listItems
     // This way initialization of listItems can be done here
     //protected ArrayList<Object> listItems;
 

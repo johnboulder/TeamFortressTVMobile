@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wherethismove.teamfortresstvmobile.pages.forums.ForumTabFragment">
+    tools:context="com.wherethismove.teamfortresstvmobile.pages.forums.ForumListTabFragment">
 
     <ListView
         android:id="@+id/list_view_forum"

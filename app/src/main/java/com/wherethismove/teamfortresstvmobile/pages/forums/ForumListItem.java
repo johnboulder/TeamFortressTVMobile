@@ -3,7 +3,7 @@ package com.wherethismove.teamfortresstvmobile.pages.forums;
 /**
  * Created by stockweezie on 12/29/2015.
  */
-public class Forum
+public class ForumListItem
 {
     private String mNumberResponses;
     private String mNumberThreads;
@@ -13,7 +13,7 @@ public class Forum
     private String mUrl;
 
 
-    public Forum(String posts, String threads, String lastActive, String title, String description, String url)
+    public ForumListItem( String posts, String threads, String lastActive, String title, String description, String url)
     {
         mNumberResponses = "Posts: "+posts;
         mNumberThreads = "Threads: "+threads;
