@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,14 +17,15 @@ import java.util.ArrayList;
  *
  * I don't understand why people criticize politicians for flip-flopping. Shouldn't we want politicians to change their stance when voters change their stance?
  */
-public class ThreadAdapter extends BaseAdapter
+public class ThreadListAdapter
+        extends BaseAdapter
 {
     private Context mContext;
-    private ThreadListViewFragment.OnThreadSelectedListener mButtonCallback;
-    private ArrayList<ForumThread> mData;
+    private ThreadListTabFragment.OnThreadSelectedListener mButtonCallback;
+    private ArrayList<ThreadListItem > mData;
     private static LayoutInflater inflater = null;
 
-    public ThreadAdapter(Context context, ThreadListViewFragment.OnThreadSelectedListener buttonCallback, ArrayList<ForumThread> data)
+    public ThreadListAdapter( Context context, ThreadListTabFragment.OnThreadSelectedListener buttonCallback, ArrayList<ThreadListItem > data)
     {
         this.mContext = context;
         this.mButtonCallback = buttonCallback;
@@ -57,7 +57,7 @@ public class ThreadAdapter extends BaseAdapter
 
         View vi = inflater.inflate(R.layout.list_item_thread, null);
 
-        final ForumThread current = mData.get(position);
+        final ThreadListItem current = mData.get( position);
         TextView posts = (TextView) vi.findViewById(R.id.posts);
         posts.setText(current.getNumberOfPosts());
 

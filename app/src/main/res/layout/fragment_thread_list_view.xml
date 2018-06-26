@@ -1,69 +1,69 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".pages.threads.ThreadListViewFragment">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".pages.threads.ThreadListTabFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RadioGroup
-            android:id="@+id/radio_group_sort"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+        <RadioGroup
+                android:id="@+id/radio_group_sort"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <ToggleButton
-                android:id="@+id/button_sort_hot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    android:id="@+id/button_sort_hot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:textOn="@string/button_sort_hot"
-                android:textOff="@string/button_sort_hot"
-                android:layout_weight="1"
-                android:onClick="onToggle"/>
+                    android:textOn="@string/button_sort_hot"
+                    android:textOff="@string/button_sort_hot"
+                    android:layout_weight="1"
+                    android:onClick="onToggle"/>
             <ToggleButton
-                android:id="@+id/button_sort_active"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    android:id="@+id/button_sort_active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:checked="true"
-                android:textOn="@string/button_sort_active"
-                android:textOff="@string/button_sort_active"
-                android:layout_weight="1"
-                android:onClick="onToggle"/>
+                    android:checked="true"
+                    android:textOn="@string/button_sort_active"
+                    android:textOff="@string/button_sort_active"
+                    android:layout_weight="1"
+                    android:onClick="onToggle"/>
             <ToggleButton
-                android:id="@+id/button_sort_new"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    android:id="@+id/button_sort_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:textOff="@string/button_sort_new"
-                android:textOn="@string/button_sort_new"
-                android:layout_weight="1"
-                android:onClick="onToggle"/>
+                    android:textOff="@string/button_sort_new"
+                    android:textOn="@string/button_sort_new"
+                    android:layout_weight="1"
+                    android:onClick="onToggle"/>
             <ToggleButton
-                android:id="@+id/button_sort_top"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    android:id="@+id/button_sort_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:textOn="@string/button_sort_top"
-                android:textOff="@string/button_sort_top"
-                android:layout_weight="1"
-                android:onClick="onToggle"/>
+                    android:textOn="@string/button_sort_top"
+                    android:textOff="@string/button_sort_top"
+                    android:layout_weight="1"
+                    android:onClick="onToggle"/>
 
         </RadioGroup>
     </LinearLayout>
 
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/swipe_refresh"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ListView
-        android:id="@+id/thread_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
-</android.support.v4.widget.SwipeRefreshLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ListView
+                android:id="@+id/thread_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+        </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

@@ -33,7 +33,7 @@ public class ForumsViewFragment extends PageViewFragment
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewpager);
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getChildFragmentManager(), getContext()));
+        viewPager.setAdapter(new ForumListPagerAdapter( getChildFragmentManager(), getContext()));
 
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) v.findViewById(R.id.sliding_tabs);

@@ -23,23 +23,22 @@ import java.util.ArrayList;
 
 /**
  *
- * TODO Add functionality for sorting threads
- * TODO Add functionality for getting more pages
  * TODO make abstract class?
  */
-public class ThreadListViewFragment extends PageViewFragment
+public class ThreadListTabFragment
+        extends PageViewFragment
 {
-    protected ArrayList<ForumThread> listItems;
-    private ThreadAdapter mAdapter;
+    protected ArrayList<ThreadListItem > listItems;
+    private ThreadListAdapter mAdapter;
     private OnThreadSelectedListener mListener;
     private String mTitle;
 
-    public ThreadListViewFragment() {
+    public ThreadListTabFragment() {
         // Required empty public constructor
     }
 
-    public static ThreadListViewFragment newInstance(String url, int layout) {
-        ThreadListViewFragment fragment = new ThreadListViewFragment();
+    public static ThreadListTabFragment newInstance( String url, int layout) {
+        ThreadListTabFragment fragment = new ThreadListTabFragment();
         Bundle args = new Bundle();
         args.putString(ARG_URL, url);
         args.putInt(ARG_LAYOUT, layout);
@@ -79,7 +78,7 @@ public class ThreadListViewFragment extends PageViewFragment
         populateList();
 
         // Pass a
-        mAdapter = new ThreadAdapter(v.getContext(), mListener, listItems);
+        mAdapter = new ThreadListAdapter( v.getContext(), mListener, listItems);
         lv.setAdapter(mAdapter);
 
         // Setup the scroll listener which updates the contents of the listView whenever the last
@@ -160,7 +159,7 @@ public class ThreadListViewFragment extends PageViewFragment
                     public void refreshList(Document doc)
                     {
                         listItems.clear();
-                        listItems.add(new ForumThread("Loading", "Loading", "Loading", "Loading", "Loading", "Loading", "Loading"));
+                        listItems.add(new ThreadListItem( "Loading", "Loading", "Loading", "Loading", "Loading", "Loading", "Loading"));
                         mAdapter.notifyDataSetChanged();
                         listItems.clear();
                         onScrollListener.resetItemCount();
@@ -225,7 +224,7 @@ public class ThreadListViewFragment extends PageViewFragment
             // Get the postTime (use div.description for username+postTime+forum)
             String postTime = mainData.select("span.date-eta").text();
 
-            ForumThread ft = new ForumThread(posts, pages.toString(), op, title, description.text(), frags.text(), threadURLWithoutPage);
+            ThreadListItem ft = new ThreadListItem( posts, pages.toString(), op, title, description.text(), frags.text(), threadURLWithoutPage);
 
             listItems.add(ft);
         }

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.wherethismove.teamfortresstvmobile.pages.threads.ForumThread;
+import com.wherethismove.teamfortresstvmobile.pages.threads.ThreadListItem;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public abstract class PageAdapter extends BaseAdapter{
     private Context mContext;
-    private ArrayList<ForumThread> mData;
+    private ArrayList<ThreadListItem > mData;
     private static LayoutInflater inflater = null;
 
     @Override

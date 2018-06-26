@@ -24,7 +24,7 @@ import com.wherethismove.teamfortresstvmobile.pages.forums.Forum;
 import com.wherethismove.teamfortresstvmobile.pages.forums.ForumTabFragment;
 import com.wherethismove.teamfortresstvmobile.pages.forums.ForumsViewFragment;
 import com.wherethismove.teamfortresstvmobile.pages.HomePageFragment;
-import com.wherethismove.teamfortresstvmobile.pages.threads.ThreadListViewFragment;
+import com.wherethismove.teamfortresstvmobile.pages.threads.ThreadListTabFragment;
 import com.wherethismove.teamfortresstvmobile.utils.GetPageDataTask;
 
 import org.jsoup.nodes.Document;
@@ -39,7 +39,7 @@ public class MainActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomePageFragment.OnFragmentInteractionListener,
         ForumTabFragment.OnTabForumSelectedListener,
-        ThreadListViewFragment.OnThreadSelectedListener,
+        ThreadListTabFragment.OnThreadSelectedListener,
         ThreadViewFragment.commentFiller,
         AboutPageFragment.OnFragmentInteractionListener
 {
@@ -101,7 +101,7 @@ public class MainActivity
                     public void onBackStackChanged( )
                     {
                         Fragment f = getSupportFragmentManager( ).findFragmentById( R.id.fragment_container );
-                        if( f instanceof ThreadListViewFragment )
+                        if( f instanceof ThreadListTabFragment )
                         {
                             updateNavigationSelection( 1 );
                         }
@@ -323,7 +323,7 @@ public class MainActivity
             args.putString( PageViewFragment.ARG_URL, URL_HOSTNAME.toString( ) + "/" + PATH_THREADS );
             args.putInt( PageViewFragment.ARG_LAYOUT, R.layout.fragment_thread_list_view );
             args.putSerializable( PageViewFragment.ARG_URL_OBJECT, URL_THREADS );
-            ThreadListViewFragment threads = new ThreadListViewFragment( );
+            ThreadListTabFragment threads = new ThreadListTabFragment( );
             threads.setArguments( args );
 
             FragmentManager fragmentManager = getSupportFragmentManager( );
@@ -443,7 +443,7 @@ public class MainActivity
                         f.getForumUrl( ) );
         args.putInt( "layout",
                      R.layout.fragment_thread_list_view );
-        ThreadListViewFragment threads = new ThreadListViewFragment( );
+        ThreadListTabFragment threads = new ThreadListTabFragment( );
         threads.setArguments( args );
 
         FragmentManager fm = getSupportFragmentManager( );

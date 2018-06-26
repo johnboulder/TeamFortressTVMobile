@@ -3,7 +3,7 @@ package com.wherethismove.teamfortresstvmobile.pages.threads;
 /**
  * Created by John Walter Stockwell on 12/24/2015.
  */
-public class ForumThread
+public class ThreadListItem
 {
     private String mUpvotes;
     private String mNumberResponses;
@@ -17,7 +17,7 @@ public class ForumThread
     private String mUrl;
 
 
-    public ForumThread(String responses, String pages, String op, String title, String postTime, String frags, String url)
+    public ThreadListItem( String responses, String pages, String op, String title, String postTime, String frags, String url)
     {
         mNumberResponses = "Posts: "+responses;
         mNumberPages = "Pages: "+pages;
