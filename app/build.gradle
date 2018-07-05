@@ -1,21 +1,21 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.wherethismove.teamfortresstvmobile"
         minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 3
+        targetSdkVersion 27
+        versionCode 4
 
         /*Given a version number MAJOR.MINOR.PATCH, increment the:
         * MAJOR version when you make incompatible API changes,
         * MINOR version when you add functionality in a backwards-compatible manner, and
         * PATCH version when you make backwards-compatible bug fixes.
         */
-        versionName "1.1.0"
+        versionName "1.1.1"
     }
     buildTypes {
         release {

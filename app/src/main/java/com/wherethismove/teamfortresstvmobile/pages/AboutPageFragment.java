@@ -37,7 +37,7 @@ public class AboutPageFragment extends Fragment {
     {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_about_page, container, false);
-        String version = BuildConfig.VERSION_NAME + "("+BuildConfig.VERSION_CODE+")";
+        String version = "Version " + BuildConfig.VERSION_NAME;
         TextView version_tv = (TextView) v.findViewById(R.id.version_number);
         version_tv.setText(version);
 

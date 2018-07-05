@@ -75,11 +75,9 @@ public class HtmlTagHandler implements Html.TagHandler
                 append(output, CustomQuoteSpan.class, new TextAppearanceSpan(mContext, R.style.AppTheme_QuoteText));
             }
         }
-        // Handles spans which are (so far as I can tell) only used for spoiler buttons and
-        // usernames in quotes.
-        else if (tag.equalsIgnoreCase("span"))
+        // Handles the usernames within quotes
+        else if (tag.equalsIgnoreCase("quote-username"))
         {
-            // Start of the span tag
             if (opening)
             {
                 start(output, new UserName());
@@ -93,7 +91,6 @@ public class HtmlTagHandler implements Html.TagHandler
                 append(output, ForegroundColorSpan.class, new StyleSpan(Typeface.BOLD));
             }
         }
-
         // Handles spoiler content
         else if(tag.equalsIgnoreCase("spoiler"))
         {

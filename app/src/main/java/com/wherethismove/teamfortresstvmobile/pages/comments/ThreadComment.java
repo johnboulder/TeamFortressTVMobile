@@ -1,14 +1,16 @@
 package com.wherethismove.teamfortresstvmobile.pages.comments;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
 /**
  * Created by stockweezie on 12/29/2015.
  */
-public class ThreadComment
-{
+public class ThreadComment {
     private String mHeaderText;
     private String mFrags;
     private String mForum;
@@ -18,7 +20,13 @@ public class ThreadComment
     private String mUrl;
     private Element mBodyElement;
 
-    public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)
+    public ThreadComment( String header,
+                          String frags,
+                          String forum,
+                          String body,
+                          String footer,
+                          String postNumber,
+                          String url )
     {
         //mBodyElement = bodyElement;
 
@@ -29,8 +37,16 @@ public class ThreadComment
         // Added for workaround related to html parsing see links:
         // http://stackoverflow.com/questions/23568481/weird-taghandler-behavior-detecting-opening-and-closing-tags/25836810#25836810
         // http://stackoverflow.com/questions/34692666/android-custom-quotespan-issue
-        if(body != null)
-            body.replace("<q>", "&zwj;<q>");
+        if( body != null )
+        {
+            body.replace( "<q>", "&zwj;<q>" );
+
+            Document bodyDocument = Jsoup.parse( body );
+            Elements elements = bodyDocument.select( ".quote-attr" );
+            elements.tagName( "quote-username" );
+            body = bodyDocument.toString();
+        }
+
         mBody = body;
 
         mFooter = footer;
@@ -41,42 +57,42 @@ public class ThreadComment
         mUrl = url;
     }
 
-    public String getHeaderText()
+    public String getHeaderText( )
     {
         return mHeaderText;
     }
 
-    public String getFragCount()
+    public String getFragCount( )
     {
         return mFrags;
     }
 
-    public String getForum()
+    public String getForum( )
     {
         return mForum;
     }
 
-    public String getBody()
+    public String getBody( )
     {
         return mBody;
     }
 
-    public String getFooter()
+    public String getFooter( )
     {
         return mFooter;
     }
 
-    public String getNumber()
+    public String getNumber( )
     {
         return mPostNumber;
     }
 
-    public String getUrl()
+    public String getUrl( )
     {
-        return mUrl+"#"+mPostNumber;
+        return mUrl + "#" + mPostNumber;
     }
 
-    public Element getBodyElement()
+    public Element getBodyElement( )
     {
         return mBodyElement;
     }
