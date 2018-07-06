@@ -3,11 +3,6 @@ package com.wherethismove.teamfortresstvmobile.pages.comments;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.QuoteSpan;
-import android.text.style.StyleSpan;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +12,6 @@ import android.widget.TextView;
 
 import com.wherethismove.teamfortresstvmobile.R;
 import com.wherethismove.teamfortresstvmobile.utils.HtmlTagHandler;
-
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 
@@ -90,6 +82,12 @@ public class CommentAdapter
 
             TextView frags = vi.findViewById( R.id.comment_frag_count );
             frags.setText( current.getFragCount( ) );
+
+            if( Integer.valueOf( current.getFragCount( ) ) > 0 )
+            {
+                frags.setTextColor( vi.getResources( ).getColor( R.color.frag_green ) );
+                frags.setShadowLayer( 2f, 2f, 2f, Color.BLACK );
+            }
 
             // BODY
             TextView body = vi.findViewById( R.id.comment_body );

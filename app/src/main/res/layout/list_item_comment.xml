@@ -1,92 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/comment_background"
-    android:padding="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/comment_background"
+                android:padding="1dp"
 
-    android:descendantFocusability="blocksDescendants">
+                android:descendantFocusability="blocksDescendants">
 
     <!-- COMMENT HEADER -->
-   <RelativeLayout
-       android:id="@+id/comment_header"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+    <RelativeLayout
+            android:id="@+id/comment_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-       android:background="@color/comment_header_background_color_light">
-       <View
-           android:id="@+id/splitter_top"
-           android:layout_width="match_parent"
-           android:layout_height="1dp"
+            android:background="@color/comment_header_background_color_light">
+        <View
+                android:id="@+id/splitter_top"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
 
-           android:layout_alignParentTop="true"
-           android:background="@color/comment_header_outline_color_light"/>
+                android:layout_alignParentTop="true"
+                android:background="@color/comment_header_outline_color_light"/>
 
-       <TextView
-           android:id="@+id/comment_header_text"
-           android:layout_width="wrap_content"
-           android:layout_height="match_parent"
+        <TextView
+                android:id="@+id/comment_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
 
-           android:textColor="@android:color/black"
-           android:layout_alignParentLeft="true"
-           android:layout_below="@+id/splitter_top"
-           android:paddingLeft="5dp"/>
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:shadowColor="@android:color/white"
+                android:shadowRadius="2"
+                android:shadowDy="2"
+                android:shadowDx="2"
 
-       <TextView
-           android:id="@+id/comment_frag_count"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/splitter_top"
+                android:paddingLeft="5dp"/>
 
-           android:paddingRight="5dp"
+        <TextView
+                android:id="@+id/comment_frag_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:paddingRight="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/splitter_top"
+                android:textColor="@color/frag_red"
+                android:shadowColor="@android:color/white"
+                android:shadowRadius="2"
+                android:shadowDy="2"
+                android:shadowDx="2"/>
 
-           android:layout_alignParentRight="true"
-           android:layout_below="@+id/splitter_top"
-           android:textColor="@android:color/holo_red_light"/>
+        <View
+                android:id="@+id/splitter_header"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
 
-       <View
-           android:id="@+id/splitter_header"
-           android:layout_width="match_parent"
-           android:layout_height="1dp"
-
-           android:layout_below="@+id/comment_header_text"
-           android:background="@color/comment_header_outline_color_light"/>
-   </RelativeLayout>
+                android:layout_below="@+id/comment_header_text"
+                android:background="@color/comment_header_outline_color_light"/>
+    </RelativeLayout>
     <!-- COMMENT HEADER END-->
 
     <!-- COMMENT BODY -->
     <TextView
-        android:id="@+id/comment_body"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
+            android:id="@+id/comment_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
 
-        android:layout_below="@+id/comment_header"
-        android:textColor="@android:color/black"
-        android:focusableInTouchMode="false"
-        android:clickable="false"
-        android:focusable="true"
+            android:layout_below="@+id/comment_header"
+            android:textColor="@android:color/black"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:focusable="true"
 
-        android:padding="5dp"/>
+            android:padding="5dp"/>
     <!-- COMMENT BODY END-->
 
     <View
-        android:id="@+id/splitter_footer"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
+            android:id="@+id/splitter_footer"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
 
-        android:layout_below="@+id/comment_body"
-        android:background="@color/comment_header_outline_color_light"/>
+            android:layout_below="@+id/comment_body"
+            android:background="@color/comment_header_outline_color_light"/>
 
     <!-- COMMENT FOOTER -->
     <TextView
-        android:id="@+id/comment_footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            android:id="@+id/comment_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-        android:layout_below="@+id/splitter_footer"
-        android:padding="5dp"/>
+            android:layout_below="@+id/splitter_footer"
+            android:padding="5dp"/>
     <!-- COMMENT FOOTER END-->
 
 </RelativeLayout>
