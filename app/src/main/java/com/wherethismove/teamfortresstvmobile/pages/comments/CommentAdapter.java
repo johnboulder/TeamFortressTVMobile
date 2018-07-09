@@ -86,8 +86,12 @@ public class CommentAdapter
             if( Integer.valueOf( current.getFragCount( ) ) > 0 )
             {
                 frags.setTextColor( vi.getResources( ).getColor( R.color.frag_green ) );
-                frags.setShadowLayer( 2f, 2f, 2f, Color.BLACK );
             }
+            else if( Integer.valueOf( current.getFragCount( ) ) < 0 )
+            {
+                frags.setTextColor( vi.getResources( ).getColor( R.color.colorAccent ) );
+            }
+
 
             // BODY
             TextView body = vi.findViewById( R.id.comment_body );

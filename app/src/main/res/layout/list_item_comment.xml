@@ -29,10 +29,6 @@
 
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
-                android:shadowColor="@android:color/white"
-                android:shadowRadius="2"
-                android:shadowDy="2"
-                android:shadowDx="2"
 
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/splitter_top"
@@ -46,11 +42,7 @@
                 android:paddingRight="5dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/splitter_top"
-                android:textColor="@color/frag_red"
-                android:shadowColor="@android:color/white"
-                android:shadowRadius="2"
-                android:shadowDy="2"
-                android:shadowDx="2"/>
+                android:textColor="@color/background_material_light_old"/>
 
         <View
                 android:id="@+id/splitter_header"
