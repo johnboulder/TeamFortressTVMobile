@@ -61,7 +61,11 @@ public class ThreadListAdapter
         ViewHolder viewHolder;
         final ThreadListItem current = data.get( position );
 
-        if( convertView == null )
+        if( convertView != null && convertView.getTag( ) != null )
+        {
+            viewHolder = ( ViewHolder ) convertView.getTag( );
+        }
+        else
         {
             convertView = inflater.inflate( R.layout.list_item_thread, null );
             viewHolder = new ViewHolder( );
@@ -79,10 +83,6 @@ public class ThreadListAdapter
             viewHolder.viewThread = convertView.findViewById( R.id.b_view_thread );
 
             convertView.setTag( viewHolder );
-        }
-        else
-        {
-            viewHolder = ( ViewHolder ) convertView.getTag( );
         }
 
         viewHolder.posts.setText( current.getNumberOfPosts( ) );

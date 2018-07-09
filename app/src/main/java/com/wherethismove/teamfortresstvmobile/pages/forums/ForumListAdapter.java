@@ -52,28 +52,27 @@ public class ForumListAdapter
                          View convertView,
                          ViewGroup parent )
     {
-        View vi = convertView;
-        if( vi == null )
+        if( convertView == null )
         {
-            vi = inflater.inflate( R.layout.list_item_forum, null );
+            convertView = inflater.inflate( R.layout.list_item_forum, null );
         }
 
         ForumListItem current = mData.get( position );
-        TextView posts = ( TextView ) vi.findViewById( R.id.posts );
+        TextView posts = convertView.findViewById( R.id.posts );
         posts.setText( current.getNumberOfPosts( ) );
 
-        TextView threads = ( TextView ) vi.findViewById( R.id.threads );
+        TextView threads = convertView.findViewById( R.id.threads );
         threads.setText( current.getNumberOfThreads( ) );
 
-        TextView title = ( TextView ) vi.findViewById( R.id.title );
+        TextView title = convertView.findViewById( R.id.title );
         title.setText( current.getTitle( ) );
 
-        TextView last_active = ( TextView ) vi.findViewById( R.id.last_activity );
+        TextView last_active = convertView.findViewById( R.id.last_activity );
         last_active.setText( current.getLastActive( ) );
 
-        TextView description = ( TextView ) vi.findViewById( R.id.description );
+        TextView description = convertView.findViewById( R.id.description );
         description.setText( current.getLastActive( ) );
 
-        return vi;
+        return convertView;
     }
 }

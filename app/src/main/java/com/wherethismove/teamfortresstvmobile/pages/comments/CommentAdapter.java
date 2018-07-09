@@ -71,7 +71,11 @@ public class CommentAdapter
         if( viewType == 1 )
         {
             ViewHolder viewHolder;
-            if( convertView == null )
+            if( convertView != null && convertView.getTag( ) != null )
+            {
+                viewHolder = ( ViewHolder ) convertView.getTag( );
+            }
+            else
             {
                 //ListView recycles views and will pass the wrong vi...
                 convertView = inflater.inflate( R.layout.list_item_comment, null );
@@ -87,10 +91,6 @@ public class CommentAdapter
                 viewHolder.footer = convertView.findViewById( R.id.comment_footer );
 
                 convertView.setTag( viewHolder );
-            }
-            else
-            {
-                viewHolder = ( ViewHolder ) convertView.getTag( );
             }
 
             ThreadComment current = data.get( position );
