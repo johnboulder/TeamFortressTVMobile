@@ -13,7 +13,7 @@ public class ThreadListFragmentPagerAdapter
         extends FragmentPagerAdapter
 {
     private final int PAGE_COUNT = 4;
-    private String tabTitles[] = new String[]{"HOT", "ACTIVE", "NEW", "TOP"};
+    private String tabTitles[] = new String[]{"ACTIVE", "HOT", "NEW", "TOP"};
     private Context context;
 
     public ThreadListFragmentPagerAdapter( FragmentManager fm,

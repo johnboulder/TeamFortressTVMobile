@@ -56,10 +56,10 @@ public class ThreadListTabFragment
         switch( position )
         {
             case 0:
-                url = url + "/?sort=hot";
+                url = url + "/?sort=active";
                 break;
             case 1:
-                url = url + "/?sort=active";
+                url = url + "/?sort=hot";
                 break;
             case 2:
                 url = url + "/?sort=new";
