@@ -16,65 +16,85 @@ import java.util.ArrayList;
 /**
  * Created by stockweezie on 12/29/2015.
  */
-public class ArticleAdapter extends CommentAdapter
+public class ArticleAdapter
+        extends CommentAdapter
 {
     private final int ITEM_ARTICLE = 0;
     private final int ITEM_COMMENT = 1;
 
-    public ArticleAdapter(Context context, ArrayList<ThreadComment> data)
+    public ArticleAdapter( Context context,
+                           ArrayList< ThreadComment > data )
     {
-        super(context, data);
+        super( context, data );
     }
 
     @Override
-    public int getItemViewType(int position)
+    public int getItemViewType( int position )
     {
-        return (position == 0)? ITEM_ARTICLE : ITEM_COMMENT;
+        return (position == 0) ? ITEM_ARTICLE : ITEM_COMMENT;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView( int position,
+                         View convertView,
+                         ViewGroup parent )
     {
-        View vi;
-        int viewType = getItemViewType(position);
-        if ( viewType == 1)
+        int viewType = getItemViewType( position );
+
+        if( viewType == 1 )
         {
             // TODO find best way to do this, may be using CommentAdapter.getView()?
             // to do so, must check that layout id is list_item_comment, must initialize
             // the class, and must ensure that none of those things lead to UI irregularities
 
-            vi = inflater.inflate(R.layout.list_item_comment, null);
+            ViewHolder viewHolder;
 
-            ThreadComment current = mData.get(position);
-            TextView posts = (TextView) vi.findViewById(R.id.comment_header_text);
+            if( convertView != null && convertView.getTag( ) != null )
+            {
+                viewHolder = ( ViewHolder ) convertView.getTag( );
+            }
+            else
+            {
+                convertView = inflater.inflate( R.layout.list_item_comment, null );
+                viewHolder = new ViewHolder( );
 
-            posts.setText(current.getHeaderText());
+                viewHolder.header = convertView.findViewById( R.id.comment_header_text );
+                viewHolder.fragCount = convertView.findViewById( R.id.comment_frag_count );
+                viewHolder.body = convertView.findViewById( R.id.comment_body );
+                viewHolder.footer = convertView.findViewById( R.id.comment_footer );
 
-            TextView frags = (TextView) vi.findViewById(R.id.comment_frag_count);
-            frags.setText(current.getFragCount());
+                convertView.setTag( viewHolder );
+            }
 
-            TextView body = (TextView) vi.findViewById(R.id.comment_body);
-            body.setText(Html.fromHtml(current.getBody()));
-            body.setAutoLinkMask(Linkify.WEB_URLS);
-
-            TextView footer = (TextView) vi.findViewById(R.id.comment_footer);
-            footer.setText(current.getFooter());
-
+            ThreadComment current = data.get( position );
+            viewHolder.header.setText( current.getHeaderText( ) );
+            viewHolder.fragCount.setText( current.getFragCount( ) );
+            viewHolder.body.setText( Html.fromHtml( current.getBody( ) ) );
+            viewHolder.body.setAutoLinkMask( Linkify.WEB_URLS );
+            viewHolder.footer.setText( current.getFooter( ) );
         }
         else
         {
-            vi = inflater.inflate(R.layout.list_item_article, null);
-            ThreadComment current = mData.get(position);
+            convertView = inflater.inflate( R.layout.list_item_article, null );
+            ThreadComment current = data.get( position );
 
-            TextView title = (TextView) vi.findViewById(R.id.article_title);
-            title.setText(current.getHeaderText());
+            TextView title = convertView.findViewById( R.id.article_title );
+            title.setText( current.getHeaderText( ) );
 
-            TextView author = (TextView) vi.findViewById(R.id.article_author);
-            author.setText(current.getForum());
+            TextView author = convertView.findViewById( R.id.article_author );
+            author.setText( current.getForum( ) );
 
-            TextView body = (TextView) vi.findViewById(R.id.article_body);
-            body.setText(Html.fromHtml(current.getBody()));
+            TextView body = convertView.findViewById( R.id.article_body );
+            body.setText( Html.fromHtml( current.getBody( ) ) );
         }
-        return vi;
+
+        return convertView;
+    }
+
+    static class ViewHolder {
+        TextView header;
+        TextView fragCount;
+        TextView body;
+        TextView footer;
     }
 }

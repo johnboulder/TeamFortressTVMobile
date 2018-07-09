@@ -14,77 +14,99 @@ import java.util.ArrayList;
 
 /**
  * Created by stockweezie on 12/24/2015.
- *
+ * <p>
  * I don't understand why people criticize politicians for flip-flopping. Shouldn't we want politicians to change their stance when voters change their stance?
  */
 public class ThreadListAdapter
         extends BaseAdapter
 {
-    private Context mContext;
-    private ThreadListTabFragment.OnThreadSelectedListener mButtonCallback;
-    private ArrayList<ThreadListItem > mData;
+    private Context context;
+    private ThreadListTabFragment.OnThreadSelectedListener buttonCallback;
+    private ArrayList< ThreadListItem > data;
     private static LayoutInflater inflater = null;
 
-    public ThreadListAdapter( Context context, ThreadListTabFragment.OnThreadSelectedListener buttonCallback, ArrayList<ThreadListItem > data)
+    public ThreadListAdapter( Context context,
+                              ThreadListTabFragment.OnThreadSelectedListener buttonCallback,
+                              ArrayList< ThreadListItem > data )
     {
-        this.mContext = context;
-        this.mButtonCallback = buttonCallback;
-        this.mData = data;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.context = context;
+        this.buttonCallback = buttonCallback;
+        this.data = data;
+        inflater = ( LayoutInflater ) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
     }
 
     @Override
-    public int getCount()
+    public int getCount( )
     {
-        return mData.size();
+        return data.size( );
     }
 
     @Override
-    public Object getItem(int position)
+    public Object getItem( int position )
     {
-        return mData.get(position);
+        return data.get( position );
     }
 
     @Override
-    public long getItemId(int position)
+    public long getItemId( int position )
     {
         return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView( int position,
+                         View convertView,
+                         ViewGroup parent )
     {
+        ViewHolder viewHolder;
+        final ThreadListItem current = data.get( position );
 
-        View vi = inflater.inflate(R.layout.list_item_thread, null);
+        if( convertView == null )
+        {
+            convertView = inflater.inflate( R.layout.list_item_thread, null );
+            viewHolder = new ViewHolder( );
 
-        final ThreadListItem current = mData.get( position);
-        TextView posts = (TextView) vi.findViewById(R.id.posts);
-        posts.setText(current.getNumberOfPosts());
+            viewHolder.posts = convertView.findViewById( R.id.posts );
 
-        TextView pages = (TextView) vi.findViewById(R.id.pages);
-        pages.setText(current.getNumberOfPages());
+            viewHolder.pages = convertView.findViewById( R.id.pages );
 
-//        TextView poster = (TextView) vi.findViewById(R.id.poster);
-//        poster.setText(current.getOPName());
+            viewHolder.frags = convertView.findViewById( R.id.thread_frag_count );
 
-        TextView frags = (TextView) vi.findViewById(R.id.thread_frag_count);
-        frags.setText(current.getFrags());
+            viewHolder.title = convertView.findViewById( R.id.title );
 
-        TextView title = (TextView) vi.findViewById(R.id.title);
-        title.setText(current.getTitle());
+            viewHolder.post_time = convertView.findViewById( R.id.post_time );
 
-        TextView post_time = (TextView) vi.findViewById(R.id.post_time);
-        post_time.setText(current.getSubmissionTime());
+            viewHolder.viewThread = convertView.findViewById( R.id.b_view_thread );
 
-        ImageButton viewThread = (ImageButton) vi.findViewById(R.id.b_view_thread);
-        viewThread.setOnClickListener(new View.OnClickListener(){
+            convertView.setTag( viewHolder );
+        }
+        else
+        {
+            viewHolder = ( ViewHolder ) convertView.getTag( );
+        }
+
+        viewHolder.posts.setText( current.getNumberOfPosts( ) );
+        viewHolder.pages.setText( current.getNumberOfPages( ) );
+        viewHolder.frags.setText( current.getFrags( ) );
+        viewHolder.title.setText( current.getTitle( ) );
+        viewHolder.post_time.setText( current.getSubmissionTime( ) );
+        viewHolder.viewThread.setOnClickListener( new View.OnClickListener( ) {
             @Override
-            public void onClick(View v)
+            public void onClick( View v )
             {
-                mButtonCallback.openThread(current.getThreadUrl());
+                buttonCallback.openThread( current.getThreadUrl( ) );
             }
-        });
+        } );
 
-        return vi;
+        return convertView;
+    }
+
+    static class ViewHolder {
+        TextView posts;
+        TextView pages;
+        TextView frags;
+        TextView title;
+        TextView post_time;
+        ImageButton viewThread;
     }
 }

@@ -18,56 +18,61 @@ public class ForumListAdapter
         extends BaseAdapter
 {
     private Context mContext;
-    private ArrayList<ForumListItem > mData;
+    private ArrayList< ForumListItem > mData;
     private static LayoutInflater inflater = null;
 
-    public ForumListAdapter( Context context, ArrayList<ForumListItem > data)
+    public ForumListAdapter( Context context,
+                             ArrayList< ForumListItem > data )
     {
         this.mContext = context;
         this.mData = data;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = ( LayoutInflater ) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
     }
 
     @Override
-    public int getCount()
+    public int getCount( )
     {
-        return mData.size();
+        return mData.size( );
     }
 
     @Override
-    public Object getItem(int position)
+    public Object getItem( int position )
     {
-        return mData.get(position);
+        return mData.get( position );
     }
 
     @Override
-    public long getItemId(int position)
+    public long getItemId( int position )
     {
         return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView( int position,
+                         View convertView,
+                         ViewGroup parent )
     {
         View vi = convertView;
-        if (vi == null)
-            vi = inflater.inflate(R.layout.list_item_forum, null);
+        if( vi == null )
+        {
+            vi = inflater.inflate( R.layout.list_item_forum, null );
+        }
 
-        ForumListItem current = mData.get( position);
-        TextView posts = (TextView) vi.findViewById(R.id.posts);
-        posts.setText(current.getNumberOfPosts());
+        ForumListItem current = mData.get( position );
+        TextView posts = ( TextView ) vi.findViewById( R.id.posts );
+        posts.setText( current.getNumberOfPosts( ) );
 
-        TextView threads = (TextView) vi.findViewById(R.id.threads);
-        threads.setText(current.getNumberOfThreads());
+        TextView threads = ( TextView ) vi.findViewById( R.id.threads );
+        threads.setText( current.getNumberOfThreads( ) );
 
-        TextView title = (TextView) vi.findViewById(R.id.title);
-        title.setText(current.getTitle());
+        TextView title = ( TextView ) vi.findViewById( R.id.title );
+        title.setText( current.getTitle( ) );
 
-        TextView last_active = (TextView) vi.findViewById(R.id.last_activity);
-        last_active.setText(current.getLastActive());
+        TextView last_active = ( TextView ) vi.findViewById( R.id.last_activity );
+        last_active.setText( current.getLastActive( ) );
 
-        TextView description = (TextView) vi.findViewById(R.id.description);
-        description.setText(current.getLastActive());
+        TextView description = ( TextView ) vi.findViewById( R.id.description );
+        description.setText( current.getLastActive( ) );
 
         return vi;
     }
