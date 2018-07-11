@@ -136,15 +136,18 @@ public class ArticleViewFragment
             // Get the body
             Element body = curComment.select( "div.post-body" )
                     .first( );
-            // Get the footer
+            // Get the commentPostTime
             Element footer = curComment.select( "div.post-footer" )
                     .first( );
+            String footer_s = footer.text( );
+            // Split the commentPostTime text to remove the "quote" link and everything after it
+            footer_s = footer_s.split( "quote" )[0];
 
             Element frags = curComment.select( "span.post-frag-count" )
                     .first( );
 
-            //public ThreadComment(String header, String frags, String forum, String body, String footer, String postNumber, String url)
-            ThreadComment tc = new ThreadComment( postNumber.text( ) + " " + header.text( ), frags.text( ), forum.text( ), body.html( ), footer.text( ), postNumber.text( ), urlUnchanging + postNumber.text( ) );
+            //public ThreadComment(String header, String frags, String forum, String body, String commentPostTime, String postNumber, String url)
+            ThreadComment tc = new ThreadComment( postNumber.text( ) + " " + header.text( ), frags.text( ), forum.text( ), body.html( ), footer_s, postNumber.text( ), urlUnchanging + postNumber.text( ) );
             listItems.add( tc );
         }
     }

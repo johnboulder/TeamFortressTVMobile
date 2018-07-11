@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.wherethismove.teamfortresstvmobile.R;
@@ -88,7 +87,7 @@ public class CommentAdapter
 
                 viewHolder.body = convertView.findViewById( R.id.comment_body );
 
-                viewHolder.footer = convertView.findViewById( R.id.comment_footer );
+                viewHolder.commentPostTime = convertView.findViewById( R.id.comment_post_time );
 
                 convertView.setTag( viewHolder );
             }
@@ -109,12 +108,11 @@ public class CommentAdapter
             viewHolder.body.setText( Html.fromHtml( current.getBody( ), null, new HtmlTagHandler( context ) ) );
             viewHolder.body.setAutoLinkMask( Linkify.WEB_URLS );
 
-            viewHolder.footer.setText( current.getFooter( ) );
+            viewHolder.commentPostTime.setText( current.getCommentPostTime( ) );
         }
         // Create the title list item
         else
         {
-            //ListView recycles views and will pass the wrong vi...
             convertView = inflater.inflate( R.layout.list_item_title, null );
 
             ThreadComment current = data.get( position );
@@ -129,6 +127,6 @@ public class CommentAdapter
         TextView header;
         TextView fragCount;
         TextView body;
-        TextView footer;
+        TextView commentPostTime;
     }
 }

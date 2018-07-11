@@ -35,6 +35,15 @@
                 android:paddingLeft="5dp"/>
 
         <TextView
+                android:id="@+id/comment_post_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_toRightOf="@+id/comment_header_text"
+                android:layout_below="@+id/splitter_top"
+                android:paddingLeft="5dp"/>
+
+        <TextView
                 android:id="@+id/comment_frag_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,25 +78,4 @@
 
             android:padding="5dp"/>
     <!-- COMMENT BODY END-->
-
-    <View
-            android:id="@+id/splitter_footer"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-
-            android:layout_below="@+id/comment_body"
-            android:background="@color/comment_header_outline_color_light"/>
-
-    <!-- COMMENT FOOTER -->
-    <TextView
-            android:id="@+id/comment_footer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_below="@+id/splitter_footer"
-            android:padding="5dp"/>
-    <!-- COMMENT FOOTER END-->
-
 </RelativeLayout>

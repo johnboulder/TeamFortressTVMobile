@@ -61,7 +61,7 @@ public class ArticleAdapter
                 viewHolder.header = convertView.findViewById( R.id.comment_header_text );
                 viewHolder.fragCount = convertView.findViewById( R.id.comment_frag_count );
                 viewHolder.body = convertView.findViewById( R.id.comment_body );
-                viewHolder.footer = convertView.findViewById( R.id.comment_footer );
+                viewHolder.commentPostTime = convertView.findViewById( R.id.comment_post_time );
 
                 convertView.setTag( viewHolder );
             }
@@ -71,7 +71,7 @@ public class ArticleAdapter
             viewHolder.fragCount.setText( current.getFragCount( ) );
             viewHolder.body.setText( Html.fromHtml( current.getBody( ) ) );
             viewHolder.body.setAutoLinkMask( Linkify.WEB_URLS );
-            viewHolder.footer.setText( current.getFooter( ) );
+            viewHolder.commentPostTime.setText( current.getCommentPostTime( ) );
         }
         else
         {
@@ -95,6 +95,6 @@ public class ArticleAdapter
         TextView header;
         TextView fragCount;
         TextView body;
-        TextView footer;
+        TextView commentPostTime;
     }
 }
