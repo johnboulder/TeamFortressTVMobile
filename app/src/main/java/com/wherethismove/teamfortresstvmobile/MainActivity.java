@@ -159,18 +159,11 @@ public class MainActivity
         new GetPageDataTask(
                 new PageViewFragment.GetDocumentCallback( ) {
                     @Override
-                    public void refreshList( Document document )
-                    {
-                        /**/
-                    }
-
-                    @Override
-                    public void callback( View view,
-                                          Document result )
+                    public void callback( Document result )
                     {
                         document = result;
                     }
-                }, v ).execute( URL_HOSTNAME.toString( ) );
+                } ).execute( URL_HOSTNAME.toString( ) );
 
     }
 

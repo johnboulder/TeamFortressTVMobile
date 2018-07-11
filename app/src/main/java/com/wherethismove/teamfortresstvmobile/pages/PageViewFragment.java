@@ -66,22 +66,12 @@ public abstract class PageViewFragment
         GetPageDataTask task = new GetPageDataTask(
                 new GetDocumentCallback( ) {
                     @Override
-                    public void refreshList( Document document )
-                    {
-                        /* Unimplemented intentionally. Maybe don't extend RefreshFragmentListCallback
-                         * in GetDocumentCallback
-                         */
-                    }
-
-                    @Override
-                    public void callback( View view,
-                                          Document result )
+                    public void callback( Document result )
                     {
                         document = result;
-                        initializeList( view );
+                        initializeList( );
                     }
-                },
-                v2 );
+                } );
         task.execute( url );
 
         return v;
@@ -93,20 +83,14 @@ public abstract class PageViewFragment
     }
 
     // Called from onCreateView after the document is downloaded
-    abstract protected void initializeList( View v );
+    abstract protected void initializeList( );
 
     // Called from initialize list for each initialized list
     // Called from listeners when list_items are added to the list
     abstract protected void populateList( );
 
-    public interface RefreshFragmentListCallback {
-        void refreshList( Document document );
-    }
-
     public interface GetDocumentCallback
-            extends RefreshFragmentListCallback
     {
-        void callback( View view,
-                       Document result );
+        void callback( Document document );
     }
 }

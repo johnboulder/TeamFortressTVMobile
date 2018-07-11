@@ -2,11 +2,7 @@ package com.wherethismove.teamfortresstvmobile.utils;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
-
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -29,14 +25,11 @@ public class GetPageDataTask
         extends AsyncTask< String, Void, Document >
 {
 
-    private PageViewFragment.GetDocumentCallback mFragmentCallBack;
-    private View mView;
+    private PageViewFragment.GetDocumentCallback fragmentCallback;
 
-    public GetPageDataTask( PageViewFragment.GetDocumentCallback fragment,
-                            View view )
+    public GetPageDataTask( PageViewFragment.GetDocumentCallback fragment )
     {
-        mFragmentCallBack = fragment;
-        mView = view;
+        fragmentCallback = fragment;
     }
 
     @Override
@@ -88,9 +81,9 @@ public class GetPageDataTask
     @Override
     protected void onPostExecute( Document result )
     {
-        if( mFragmentCallBack != null )
+        if( fragmentCallback != null )
         {
-            mFragmentCallBack.callback( mView, result );
+            fragmentCallback.callback( result );
         }
     }
 }

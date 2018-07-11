@@ -57,12 +57,12 @@ public class ForumListTabFragment
     }
 
     @Override
-    protected void initializeList( View v )
+    protected void initializeList()
     {
         // TODO This function is called many, many times when switching between tabs in the view.
         // TODO Make sure that it's not downloading it from the website every time.
         listItems = new ArrayList<>( );
-        final ListView lv = ( ListView ) v.findViewById( R.id.list_view_forum );
+        final ListView lv = getView().findViewById( R.id.list_view_forum );
         Elements forums = document.select( "div.forum-container" );
         Element subForum = forums.get( position );
         Elements subForums = subForum.select( "div.subforum" );
@@ -91,7 +91,7 @@ public class ForumListTabFragment
             listItems.add( f );
         }
 
-        ForumListAdapter adapter = new ForumListAdapter( v.getContext( ), listItems );
+        ForumListAdapter adapter = new ForumListAdapter( getView().getContext( ), listItems );
         lv.setAdapter( adapter );
 
         lv.setOnItemClickListener( new AdapterView.OnItemClickListener( ) {

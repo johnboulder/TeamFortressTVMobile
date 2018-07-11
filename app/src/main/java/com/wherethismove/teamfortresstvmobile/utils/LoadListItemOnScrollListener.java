@@ -12,14 +12,14 @@ import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
 public class LoadListItemOnScrollListener implements AbsListView.OnScrollListener
 {
     private int previousLastItem;
-    private PageViewFragment.RefreshFragmentListCallback mFragmentCallback;
-    private String mUrl;
-    private Integer mPage;
+    private PageViewFragment.GetDocumentCallback fragmentCallback;
+    private String url;
+    private Integer pageNumber;
 
-    public LoadListItemOnScrollListener(PageViewFragment.RefreshFragmentListCallback callback, String url)
+    public LoadListItemOnScrollListener(PageViewFragment.GetDocumentCallback callback, String url)
     {
-        mFragmentCallback = callback;
-        mUrl = url;
+        fragmentCallback = callback;
+        this.url = url;
     }
 
     public void resetItemCount()
@@ -29,7 +29,7 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
 
     public void setUrl(String url)
     {
-        mUrl = url;
+        this.url = url;
     }
 
     @Override
@@ -51,14 +51,14 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
                         previousLastItem = lastItem;
                         if(totalItemCount%30 == 0)
                         {
-                            mPage = (totalItemCount/30)+1;
+                            pageNumber = (totalItemCount/30)+1;
                         }
                         else
                         {
                             // Ensures totalItemCount is a rounded off number, like 30, 60, 90, etc.
-                            mPage = ((totalItemCount+(30-totalItemCount%30))/30)+1;
+                            pageNumber = ((totalItemCount+(30-totalItemCount%30))/30)+1;
                         }
-                        new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"&page="+mPage.toString());
+                        new GetPageDataTask( fragmentCallback ).execute( url +"&page="+ pageNumber.toString());
                     }
                 }
                 break;
@@ -74,14 +74,14 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
                         totalItemCount-=1;
                         if((totalItemCount)%30 == 0)
                         {
-                            mPage = (totalItemCount/30)+1;
+                            pageNumber = (totalItemCount/30)+1;
                         }
                         else
                         {
                             // Ensures totalItemCount is a rounded off number, like 30, 60, 90, etc.
-                            mPage = ((totalItemCount+(30-totalItemCount%30))/30)+1;
+                            pageNumber = ((totalItemCount+(30-totalItemCount%30))/30)+1;
                         }
-                        new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"/?page="+mPage.toString());
+                        new GetPageDataTask( fragmentCallback ).execute( url +"/?page="+ pageNumber.toString());
                     }
                 }
                 break;
@@ -100,14 +100,14 @@ public class LoadListItemOnScrollListener implements AbsListView.OnScrollListene
                         totalItemCount-=1;
                         if((totalItemCount)%30 == 0)
                         {
-                            mPage = (totalItemCount/30)+1;
+                            pageNumber = (totalItemCount/30)+1;
                         }
                         else
                         {
                             // Ensures totalItemCount is a rounded off number, like 30, 60, 90, etc.
-                            mPage = ((totalItemCount+(30-totalItemCount%30))/30)+1;
+                            pageNumber = ((totalItemCount+(30-totalItemCount%30))/30)+1;
                         }
-                        new GetNewPageDataTask(mFragmentCallback).execute(mUrl+"/?page="+mPage.toString());
+                        new GetPageDataTask( fragmentCallback ).execute( url +"/?page="+ pageNumber.toString());
                     }
                 }
                 break;

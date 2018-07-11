@@ -3,14 +3,11 @@ package com.wherethismove.teamfortresstvmobile.pages.comments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.View;
 import android.widget.ListView;
-
 import com.wherethismove.teamfortresstvmobile.R;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
-import com.wherethismove.teamfortresstvmobile.utils.GetNewPageDataTask;
+import com.wherethismove.teamfortresstvmobile.utils.GetPageDataTask;
 import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -42,7 +39,7 @@ public class ThreadViewFragment extends PageViewFragment {
     }
 
     @Override
-    protected void initializeList(View v)
+    protected void initializeList()
     {
 
         // Set the thread title
@@ -52,8 +49,8 @@ public class ThreadViewFragment extends PageViewFragment {
 
         populateList();
 
-        final ListView lv = (ListView) v.findViewById(R.id.comments_list);
-        mAdapter = new CommentAdapter(v.getContext(), listItems);
+        final ListView lv = getView().findViewById(R.id.comments_list);
+        mAdapter = new CommentAdapter(getView().getContext(), listItems);
         lv.setAdapter(mAdapter);
         lv.setDescendantFocusability(FOCUS_BLOCK_DESCENDANTS);
 
@@ -61,10 +58,10 @@ public class ThreadViewFragment extends PageViewFragment {
         // item in the list becomes visible
         // NOTE: This changes the value of document.
         lv.setOnScrollListener(new LoadListItemOnScrollListener(
-                new RefreshFragmentListCallback()
+                new GetDocumentCallback()
                 {
                     @Override
-                    public void refreshList(Document doc)
+                    public void callback(Document doc)
                     {
                         document = doc;
                         populateList();
@@ -75,7 +72,7 @@ public class ThreadViewFragment extends PageViewFragment {
         ));
 
         //TODO find a way to merge this functionality with what LoadListItemOnScrollListener does
-        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout = getView().findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
 
             @Override
@@ -93,10 +90,10 @@ public class ThreadViewFragment extends PageViewFragment {
                     page = ((totalItemCount+(30-totalItemCount%30))/30)+1;
                 }
                 // Take listItems.size()%30, if there's a remainder, stay on the page we have
-                new GetNewPageDataTask(new RefreshFragmentListCallback()
+                new GetPageDataTask( new GetDocumentCallback()
                 {
                     @Override
-                    public void refreshList(Document doc)
+                    public void callback(Document doc)
                     {
                         document = doc;
                         populateList();

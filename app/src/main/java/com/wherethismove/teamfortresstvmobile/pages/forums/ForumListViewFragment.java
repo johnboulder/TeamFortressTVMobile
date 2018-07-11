@@ -44,7 +44,7 @@ public class ForumListViewFragment
     }
 
     @Override
-    protected void initializeList(View v)
+    protected void initializeList()
     {
     }
 

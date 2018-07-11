@@ -5,15 +5,11 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.RadioGroup;
-import android.widget.ToggleButton;
-
 import com.wherethismove.teamfortresstvmobile.MainActivity;
 import com.wherethismove.teamfortresstvmobile.R;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
-import com.wherethismove.teamfortresstvmobile.utils.GetNewPageDataTask;
+import com.wherethismove.teamfortresstvmobile.utils.GetPageDataTask;
 import com.wherethismove.teamfortresstvmobile.utils.LoadListItemOnScrollListener;
-
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -98,14 +94,14 @@ public class ThreadListTabFragment
 
     // TODO: refactor, View v param is unnecessary
     @Override
-    protected void initializeList( View v )
+    protected void initializeList( )
     {
-        final ListView lv = ( ListView ) v.findViewById( R.id.thread_list );
+        final ListView lv = getView( ).findViewById( R.id.thread_list );
 
         // Fill the thread list with threads
         populateList( );
 
-        mAdapter = new ThreadListAdapter( v.getContext( ), mListener, listItems );
+        mAdapter = new ThreadListAdapter( getView( ).getContext( ), mListener, listItems );
         lv.setAdapter( mAdapter );
 
         // Setup the scroll listener which updates the contents of the listView whenever the last item in the list becomes visible
@@ -115,9 +111,9 @@ public class ThreadListTabFragment
         // and any calculations are done within the callback. Make it so the callback can be used
         // here or setOnRefreshListener. Consider making a URL object
         onScrollListener = new LoadListItemOnScrollListener(
-                new RefreshFragmentListCallback( ) {
+                new GetDocumentCallback( ) {
                     @Override
-                    public void refreshList( Document doc )
+                    public void callback( Document doc )
                     {
                         document = doc;
                         populateList( );
@@ -132,17 +128,17 @@ public class ThreadListTabFragment
         View rootView = getView( );
         if( rootView != null )
         {
-            swipeRefreshLayout = ( SwipeRefreshLayout ) rootView.findViewById( R.id.swipe_refresh );
+            swipeRefreshLayout = rootView.findViewById( R.id.swipe_refresh );
             swipeRefreshLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener( ) {
 
                 @Override
                 public void onRefresh( )
                 {
                     // Just get the page again, the site already refreshes the data
-                    new GetNewPageDataTask( new RefreshFragmentListCallback( ) {
+                    new GetPageDataTask( new GetDocumentCallback( ) {
                         // TODO refactor so only the changed portions of each listItem are changed
                         @Override
-                        public void refreshList( Document doc )
+                        public void callback( Document doc )
                         {
                             listItems.clear( );
                             mAdapter.notifyDataSetChanged( );

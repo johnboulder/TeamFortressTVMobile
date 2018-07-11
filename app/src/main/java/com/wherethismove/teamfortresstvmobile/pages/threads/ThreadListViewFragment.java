@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.wherethismove.teamfortresstvmobile.R;
 import com.wherethismove.teamfortresstvmobile.pages.PageViewFragment;
-import com.wherethismove.teamfortresstvmobile.pages.forums.ForumListFragmentPagerAdapter;
 
 public class ThreadListViewFragment
         extends PageViewFragment
@@ -31,21 +30,21 @@ public class ThreadListViewFragment
                               ViewGroup container,
                               Bundle savedInstanceState )
     {
-        View v = super.onCreateView( inflater, container, savedInstanceState );
+        View view = super.onCreateView( inflater, container, savedInstanceState );
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = ( ViewPager ) v.findViewById( R.id.viewpager );
+        ViewPager viewPager = ( ViewPager ) view.findViewById( R.id.viewpager );
         viewPager.setAdapter( new ThreadListFragmentPagerAdapter( getChildFragmentManager( ), getContext( ) ) );
 
         // Give the TabLayout the ViewPager
-        TabLayout tabLayout = ( TabLayout ) v.findViewById( R.id.sliding_tabs );
+        TabLayout tabLayout = ( TabLayout ) view.findViewById( R.id.sliding_tabs );
         tabLayout.setupWithViewPager( viewPager );
 
-        return v;
+        return view;
     }
 
     @Override
-    protected void initializeList( View v )
+    protected void initializeList()
     {
 
     }
